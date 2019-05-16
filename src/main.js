@@ -17,6 +17,7 @@ Vue.use(ElementUI, {
     size: 'small'
 });
 Vue.prototype.$axios = axios;
+axios.default.baseURL = 'http://localhost:8443/api';
 
 const i18n = new VueI18n({
     locale: 'zh',

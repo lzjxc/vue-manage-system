@@ -7,7 +7,7 @@ export default new Router({
     routes: [
         {
             path: '/',
-            redirect: '/dashboard'
+            redirect: '/table'
         },
         {
             path: '/',
@@ -27,7 +27,12 @@ export default new Router({
                 {
                     path: '/table',
                     component: resolve => require(['../components/page/BaseTable.vue'], resolve),
-                    meta: { title: '基础表格' }
+                    meta: { title: '评论数据' }
+                },
+                {
+                    path: '/dataMerge',
+                    component: resolve => require(['../components/page/DataMerge.vue'], resolve),
+                    meta: { title: '数据融合' }
                 },
                 {
                     path: '/tabs',
