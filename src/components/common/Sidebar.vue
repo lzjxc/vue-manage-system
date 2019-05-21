@@ -58,15 +58,15 @@
                     //     index: 'tabs',
                     //     title: 'tab选项卡'
                     // },
-                    // {
-                    //     icon: 'el-icon-lx-calendar',
-                    //     index: '3',
-                    //     title: '表单相关',
-                    //     subs: [
-                    //         {
-                    //             index: 'form',
-                    //             title: '基本表单'
-                    //         },
+                    {
+                         icon: 'el-icon-lx-calendar',
+                        index: '3',
+                        title: '表单相关',
+                        subs: [
+                            {
+                                index: 'form',
+                                title: '基本表单'
+                            },
                     //         {
                     //             index: '3-2',
                     //             title: '三级菜单',
@@ -85,8 +85,8 @@
                     //             index: 'upload',
                     //             title: '文件上传'
                     //         }
-                    //     ]
-                    // },
+                        ]
+                    },
                     // {
                     //     icon: 'el-icon-lx-emoji',
                     //     index: 'icon',
