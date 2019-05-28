@@ -2,21 +2,24 @@
     <div class="table">
         <div class="crumbs">
             <el-breadcrumb separator="/">
-                <el-breadcrumb-item><i class="el-icon-lx-cascades"></i>媒介触点</el-breadcrumb-item>
+                <el-breadcrumb-item><i class="el-icon-lx-cascades"></i>新老客</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="container">
             <div class="handle-box">
                 <!--<el-button type="primary" icon="delete" class="handle-del mr10" @click="delAll">批量删除</el-button>-->
-                <el-select v-model="selectMerchant" placeholder="选择商家" @change="downloadAll=false" class="handle-select mr10" clearable @clear="getAllMediaTouchPoint()">
+                <el-select v-model="selectMerchant" placeholder="选择商家" @change="downloadAll=false"
+                           class="handle-select mr10" clearable @clear="getAllNewAndOldCustomer()">
                     <el-option key="1" label="abckids" value="abckids"></el-option>
                     <el-option key="2" label="科大讯飞" value="科大讯飞"></el-option>
                 </el-select>
                 <!--<el-input v-model="select_word" placeholder="筛选关键词" class="handle-input mr10"></el-input>-->
-                <el-button type="primary"  @click="getMediaTouchPointByMerchant()"><i class="el-icon-lx-search"></i> 搜索</el-button>
-                <el-button type="primary"  v-if="downloadAll"@click="downloadAllMediaTouchPointCsvByMerchant()" ><i class="el-icon-lx-down"></i> 下载全部</el-button>
+                <el-button type="primary" @click="getNewAndOldCustomerByMerchant()"><i class="el-icon-lx-search"></i> 搜索
+                </el-button>
+                <el-button type="primary" v-if="downloadAll" @click="downloadAllNewAndOldCustomerCsvByMerchant()"><i
+                        class="el-icon-lx-down"></i> 下载全部
+                </el-button>
             </div>
-
             <el-table :data="dataList" border class="table" ref="multipleTable"
                       @selection-change="handleSelectionChange">
                 <!--<el-table-column type="selection" width="55" align="center"></el-table-column>-->
@@ -24,13 +27,12 @@
                 </el-table-column>
                 <el-table-column prop="merchant" label="商家">
                 </el-table-column>
-
                 <el-table-column prop="date" label="日期" sortable>
                 </el-table-column>
                 <el-table-column label="操作" width="180" align="center">
                     <template slot-scope="scope">
                         <el-button type="text" icon="el-icon-down"
-                                   @click="downloadOneMediaTouchPointCsvByTitle(scope.$index, scope.row)">
+                                   @click="downloadOneNewAndOldCustomerCsvByTitle(scope.$index, scope.row)">
                             <i class="el-icon-lx-down"></i>下载
                         </el-button>
                     </template>
@@ -43,21 +45,23 @@
 
 <script>
     import {
-        getAllMediaTouchPoint,
-        getMediaTouchPointByMerchant,
-        downloadAllMediaTouchPointCsvByMerchant,
-        downloadOneMediaTouchPointCsvByTitle
-    } from "../../../api/MediaTouchPoint";
+        getAllNewAndOldCustomer,
+        getNewAndOldCustomerByMerchant,
+        downloadAllNewAndOldCustomerCsvByMerchant,
+        downloadOneNewAndOldCustomerCsvByTitle
+    } from "../../../api/NewAndOldCustomer";
     import Schart from 'vue-schart';
+
     export default {
 
-        name: 'MediaTouchPointtable',
+        name: 'NewAndOldCustomertable',
         components: {
             Schart
         },
         data() {
             return {
-                downloadAll:false,
+
+                downloadAll: false,
                 dataList: [],
                 url: './vuetable.json',
                 selectMerchant: '',
@@ -65,36 +69,36 @@
             }
         },
         methods: {
-            getAllMediaTouchPoint() {
-                getAllMediaTouchPoint()
+            getAllNewAndOldCustomer() {
+                getAllNewAndOldCustomer()
                     .then(data => {
                         console.log(data);
                         this.dataList = data.data
                     })
             },
-            getMediaTouchPointByMerchant() {
-                getMediaTouchPointByMerchant(this.selectMerchant)
+            getNewAndOldCustomerByMerchant() {
+                getNewAndOldCustomerByMerchant(this.selectMerchant)
                     .then(data => {
                         console.log(data);
                         this.dataList = data.data;
-                        if (data.data != ""){
+                        if (data.data != "") {
                             this.downloadAll = true;
                         }
                     })
             },
-            downloadOneMediaTouchPointCsvByTitle(index, row) {
+            downloadOneNewAndOldCustomerCsvByTitle(index, row) {
                 console.log(index);
                 console.log(row);
-                downloadOneMediaTouchPointCsvByTitle(row.title)
+                downloadOneNewAndOldCustomerCsvByTitle(row.title)
                     .then(data => {
                         console.log(data);
                         this.downloadFile(data.data);
                     })
             },
-            downloadAllMediaTouchPointCsvByMerchant(index, row) {
+            downloadAllNewAndOldCustomerCsvByMerchant(index, row) {
                 console.log(index);
                 console.log(row);
-                downloadAllMediaTouchPointCsvByMerchant(this.selectMerchant)
+                downloadAllNewAndOldCustomerCsvByMerchant(this.selectMerchant)
                     .then(data => {
                         console.log(data);
                         this.downloadFile(data.data);
@@ -115,7 +119,7 @@
             },
         },
         mounted() {
-            this.getAllMediaTouchPoint();
+            this.getAllNewAndOldCustomer();
         },
     }
 

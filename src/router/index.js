@@ -40,9 +40,9 @@ export default new Router({
                     meta: { title: '媒介触点' }
                 },
                 {
-                    path: '/sellingChannel',
-                    component: resolve => require(['../components/page/touchPoint/sellingChannel.vue'], resolve),
-                    meta: { title: '销售渠道' }
+                    path: '/newAndOldCustomer',
+                    component: resolve => require(['../components/page/touchPoint/newAndOldCustomer.vue'], resolve),
+                    meta: { title: '新老客' }
                 },
                 {
                     path: '/contentManagement',

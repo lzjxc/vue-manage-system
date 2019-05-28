@@ -68,8 +68,8 @@
                                 title: '媒介触点'
                             },
                             {
-                                index: 'contentManagement',
-                                title: '内容运营'
+                                index: 'newAndOldCustomer',
+                                title: '新老客'
                             },
                             {
                                 index: 'tianMaoPlatform',
