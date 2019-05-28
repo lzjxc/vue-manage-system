@@ -35,6 +35,31 @@ export default new Router({
                     meta: { title: '数据融合' }
                 },
                 {
+                    path: '/payedAD',
+                    component: resolve => require(['../components/page/touchPoint/payedAD.vue'], resolve),
+                    meta: { title: '付费广告' }
+                },
+                {
+                    path: '/sellingChannel',
+                    component: resolve => require(['../components/page/touchPoint/sellingChannel.vue'], resolve),
+                    meta: { title: '销售渠道' }
+                },
+                {
+                    path: '/contentManagement',
+                    component: resolve => require(['../components/page/touchPoint/contentManagement.vue'], resolve),
+                    meta: { title: '内容运营' }
+                },
+                {
+                    path: '/offlineTouchPoint',
+                    component: resolve => require(['../components/page/touchPoint/offlineTouchPoint.vue'], resolve),
+                    meta: { title: '线下触点' }
+                },
+                {
+                    path: '/tianMaoPlatform',
+                    component: resolve => require(['../components/page/touchPoint/tianMaoPlatform.vue'], resolve),
+                    meta: { title: '天猫平台' }
+                },
+                {
                     path: '/tabs',
                     component: resolve => require(['../components/page/Tabs.vue'], resolve),
                     meta: { title: 'tab选项卡' }

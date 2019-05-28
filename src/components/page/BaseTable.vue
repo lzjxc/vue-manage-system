@@ -2,18 +2,18 @@
     <div class="table">
         <div class="crumbs">
             <el-breadcrumb separator="/">
-                <el-breadcrumb-item><i class="el-icon-lx-cascades"></i>数据融合</el-breadcrumb-item>
+                <el-breadcrumb-item><i class="el-icon-lx-cascades"></i>评论数据</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="container">
             <div class="handle-box">
                 <!--<el-button type="primary" icon="delete" class="handle-del mr10" @click="delAll">批量删除</el-button>-->
-                <el-select v-model="select_cate" placeholder="筛选数据融合" class="handle-select mr10" clearable>
+                <el-select v-model="selectTitle" placeholder="筛选评论数据" class="handle-select mr10" clearable >
                     <el-option key="1" label="雪花" value="雪花"></el-option>
                     <el-option key="2" label="贾乃亮" value="JiaNaiLiang"></el-option>
                 </el-select>
-                <el-input v-model="select_word" placeholder="筛选关键词" class="handle-input mr10"></el-input>
-                <el-button type="primary" icon="search" @click="getAllCommentsList">搜索</el-button>
+                <!--<el-input v-model="select_word" placeholder="筛选关键词" class="handle-input mr10"></el-input>-->
+                <el-button type="primary" icon="search" @click="getCommentsListByTitle">搜索</el-button>
             </div>
             <el-table :data="dataList" border class="table" ref="multipleTable" @selection-change="handleSelectionChange">
                 <!--<el-table-column type="selection" width="55" align="center"></el-table-column>-->
@@ -49,7 +49,7 @@
                 tableData: [],
                 cur_page: 1,
                 multipleSelection: [],
-                select_cate: '',
+                selectTitle: '',
                 select_word: '',
                 del_list: [],
                 is_search: false,
@@ -89,7 +89,14 @@
         },
         methods: {
             getAllCommentsList(){
-                this.$axios.get(`http://localhost:8443/api/commentsList/getAllCommentsList`)
+                this.$axios.get(`http://192.168.254.132:8443/api/commentsList/getAllCommentsList`)
+                    .then(data => {
+                        console.log(data);
+                        this.dataList = data.data
+                    })
+            },
+            getCommentsListByTitle(){
+                this.$axios.get(`http://192.168.254.132:8443/api/commentsList/getCommentsListByTitle?title=`+this.selectTitle)
                     .then(data => {
                         console.log(data);
                         this.dataList = data.data
@@ -98,7 +105,7 @@
             downloadCommentsCsv(index,row) {
                 console.log(index);
                 console.log(row);
-                let getData = `http://localhost:8443/api/comments/download?title=` + row.title;
+                let getData = ` http://192.168.254.132:8443/api/comments/download?title=` + row.title;
                 this.$axios.get(getData).then(data => {
                     console.log(data);
                     this.downloadFile(data.data);
@@ -113,7 +120,7 @@
                 let link = document.createElement('a');
                 link.style.display = 'none';
                 link.href = url;
-                link.setAttribute('download', '测试excel.csv');
+                link.setAttribute('download', '下载文件.csv');
                 document.body.appendChild(link);
                 link.click()
             },

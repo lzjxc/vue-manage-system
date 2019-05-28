@@ -2,19 +2,21 @@
     <div class="table">
         <div class="crumbs">
             <el-breadcrumb separator="/">
-                <el-breadcrumb-item><i class="el-icon-lx-cascades"></i>数据融合</el-breadcrumb-item>
+                <el-breadcrumb-item><i class="el-icon-lx-cascades"></i>评论数据</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="container">
             <div class="handle-box">
-                <!--<el-select v-model="select_cate" placeholder="筛选融合数据" class="handle-select mr10" clearable>-->
-                    <!--<el-option key="1" label="雪花" value="雪花"></el-option>-->
-                    <!--<el-option key="2" label="贾乃亮" value="JiaNaiLiang"></el-option>-->
-                <!--</el-select>-->
-                <el-input v-model="select_word" placeholder="筛选关键词" class="handle-input mr10"></el-input>
-                <el-button type="primary" icon="search" @click="getAllCommentsList">搜索</el-button>
+                <!--<el-button type="primary" icon="delete" class="handle-del mr10" @click="delAll">批量删除</el-button>-->
+                <el-select v-model="selectTitle" placeholder="筛选评论数据" class="handle-select mr10" clearable >
+                    <el-option key="1" label="雪花" value="雪花"></el-option>
+                    <el-option key="2" label="贾乃亮" value="JiaNaiLiang"></el-option>
+                </el-select>
+                <!--<el-input v-model="select_word" placeholder="筛选关键词" class="handle-input mr10"></el-input>-->
+                <el-button type="primary" icon="search" @click="getCommentsListByTitle">搜索</el-button>
             </div>
             <el-table :data="dataList" border class="table" ref="multipleTable" @selection-change="handleSelectionChange">
+                <!--<el-table-column type="selection" width="55" align="center"></el-table-column>-->
                 <el-table-column prop="title" label="类别" width="120">
                 </el-table-column>
                 <el-table-column prop="count" label="评论数">
@@ -24,6 +26,7 @@
                 <el-table-column label="操作" width="180" align="center">
                     <template slot-scope="scope">
                         <el-button type="text" icon="el-icon-down" @click="downloadCommentsCsv(scope.$index, scope.row)">下载</el-button>
+                        <!--<el-button type="text" icon="el-icon-delete" class="red" @click="handleDelete(scope.$index, scope.row)">删除</el-button>-->
                     </template>
                 </el-table-column>
             </el-table>
@@ -32,12 +35,13 @@
                 </el-pagination>
             </div>
         </div>
+
     </div>
 </template>
 
 <script>
     export default {
-        name: "DataMerge",
+        name: 'basetable',
         data() {
             return {
                 dataList:[],
@@ -45,7 +49,7 @@
                 tableData: [],
                 cur_page: 1,
                 multipleSelection: [],
-                select_cate: '',
+                selectTitle: '',
                 select_word: '',
                 del_list: [],
                 is_search: false,
@@ -58,6 +62,9 @@
                 },
                 idx: -1
             }
+        },
+        created() {
+            this.getData();
         },
         computed: {
             data() {
@@ -81,8 +88,15 @@
             }
         },
         methods: {
-            getAllDataMerge(){
-                this.$axios.get(`http://localhost:8443/api/dataMergePeoplePortrait/getAllDataMerge`)
+            getAllCommentsList(){
+                this.$axios.get(`http://192.168.254.132:8443/api/commentsList/getAllCommentsList`)
+                    .then(data => {
+                        console.log(data);
+                        this.dataList = data.data
+                    })
+            },
+            getCommentsListByTitle(){
+                this.$axios.get(`http://192.168.254.132:8443/api/commentsList/getCommentsListByTitle?title=`+this.selectTitle)
                     .then(data => {
                         console.log(data);
                         this.dataList = data.data
@@ -91,7 +105,7 @@
             downloadCommentsCsv(index,row) {
                 console.log(index);
                 console.log(row);
-                let getData = `http://localhost:8443/api/dataMergePeoplePortrait/download?title=` + row.title;
+                let getData = ` http://192.168.254.132:8443/api/comments/download?title=` + row.title;
                 this.$axios.get(getData).then(data => {
                     console.log(data);
                     this.downloadFile(data.data);
@@ -106,7 +120,7 @@
                 let link = document.createElement('a');
                 link.style.display = 'none';
                 link.href = url;
-                link.setAttribute('download', '测试excel.csv');
+                link.setAttribute('download', '下载文件.csv');
                 document.body.appendChild(link);
                 link.click()
             },
@@ -130,18 +144,58 @@
             search() {
                 this.is_search = true;
             },
+            formatter(row, column) {
+                return row.address;
+            },
             filterTag(value, row) {
                 return row.tag === value;
+            },
+            handleEdit(index, row) {
+                this.idx = index;
+                const item = this.tableData[index];
+                this.form = {
+                    name: item.name,
+                    date: item.date,
+                    address: item.address
+                }
+                this.editVisible = true;
+            },
+            handleDelete(index, row) {
+                this.idx = index;
+                this.delVisible = true;
+            },
+            delAll() {
+                const length = this.multipleSelection.length;
+                let str = '';
+                this.del_list = this.del_list.concat(this.multipleSelection);
+                for (let i = 0; i < length; i++) {
+                    str += this.multipleSelection[i].name + ' ';
+                }
+                this.$message.error('删除了' + str);
+                this.multipleSelection = [];
             },
             handleSelectionChange(val) {
                 this.multipleSelection = val;
             },
+            // 保存编辑
+            saveEdit() {
+                this.$set(this.tableData, this.idx, this.form);
+                this.editVisible = false;
+                this.$message.success(`修改第 ${this.idx+1} 行成功`);
+            },
+            // 确定删除
+            deleteRow(){
+                this.tableData.splice(this.idx, 1);
+                this.$message.success('删除成功');
+                this.delVisible = false;
+            }
         },
 
         mounted:function () {
-            this.getAllDataMerge();
+            this.getAllCommentsList()
         }
     }
+
 </script>
 
 <style scoped>

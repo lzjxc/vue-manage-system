@@ -29,7 +29,7 @@
                         </el-col>
                     </el-form-item>
                     <el-form-item label="json返回文件">
-                        <el-input type="textarea" rows="5" v-model="form.desc"></el-input>
+                        <el-input type="textarea" rows="5" v-model="form.json"></el-input>
                     </el-form-item>
                     <el-form-item>
                         <el-button type="primary" @click="onSubmit">数据提交</el-button>
@@ -56,14 +56,47 @@
                     type: ['步步高'],
                     resource: '小天才',
                     desc: '',
+                    json:"",
                     options: []
                 }
             }
         },
         methods: {
             onSubmit() {
+                console.log(this.form.json);
+                console.log(this.form.json.data);
+                console.log(this.form.json.errorCode);
+                var api =`http://localhost:8443/api/dataMergeUpload/upload`;
+                this.$axios.post(api,{
+                    data:JSON.stringify(this.form.json),
+                    success:function () {
+                        this.$message.success('success');
+                    },
+                    error: function () {
+                        this.message.error('error');
+                    }
+                    }
+                ).then(
+                    data =>{
+                        console.log();
+                        // this.downloadFile(data);
+                    }
+                ),
                 this.$message.success('提交成功！');
-            }
+            },
+            downloadFile(data) {
+                // 文件导出
+                if (!data) {
+                    return
+                }
+                let url = window.URL.createObjectURL(new Blob([data]));
+                let link = document.createElement('a');
+                link.style.display = 'none';
+                link.href = url;
+                link.setAttribute('download', '测试excel.csv');
+                document.body.appendChild(link);
+                link.click()
+            },
         }
     }
 </script>
