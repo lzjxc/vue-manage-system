@@ -31,13 +31,13 @@ export default new Router({
                 },
                 {
                     path: '/dataMerge',
-                    component: resolve => require(['../components/page/DataMerge.vue'], resolve),
+                    component: resolve => require(['../components/page/DataMerge2.vue'], resolve),
                     meta: { title: '数据融合' }
                 },
                 {
-                    path: '/payedAD',
-                    component: resolve => require(['../components/page/touchPoint/payedAD.vue'], resolve),
-                    meta: { title: '付费广告' }
+                    path: '/mediaTouchPoint',
+                    component: resolve => require(['../components/page/touchPoint/mediaTouchPoint.vue'], resolve),
+                    meta: { title: '媒介触点' }
                 },
                 {
                     path: '/sellingChannel',

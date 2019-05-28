@@ -2,32 +2,50 @@
     <div class="table">
         <div class="crumbs">
             <el-breadcrumb separator="/">
-                <el-breadcrumb-item><i class="el-icon-lx-cascades"></i>数据融合</el-breadcrumb-item>
+                <el-breadcrumb-item><i class="el-icon-lx-cascades"></i>媒介触点</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="container">
             <div class="handle-box">
                 <!--<el-button type="primary" icon="delete" class="handle-del mr10" @click="delAll">批量删除</el-button>-->
-                <el-select v-model="selectMerchant" placeholder="筛选DataMerge数据" class="handle-select mr10" clearable>
-                    <el-option key="1" label="华为" value="华为"></el-option>
-                    <el-option key="2" label="青蛙王子" value="青蛙王子"></el-option>
+                <el-select v-model="selectMerchant" placeholder="选择商家" @change="downloadAll=false" class="handle-select mr10" clearable @clear="getAllMediaTouchPoint()">
+                    <el-option key="1" label="abckids" value="abckids"></el-option>
+                    <el-option key="2" label="科大讯飞" value="科大讯飞"></el-option>
                 </el-select>
                 <!--<el-input v-model="select_word" placeholder="筛选关键词" class="handle-input mr10"></el-input>-->
-                <el-button type="primary" icon="search" @click="getDataMergeByTitle">搜索</el-button>
+                <el-button type="primary"  @click="getMediaTouchPointByMerchant()"><i class="el-icon-lx-search"></i> 搜索</el-button>
+                <el-button type="primary"  v-if="downloadAll"@click="downloadAllMediaTouchPointCsvByMerchant()" ><i class="el-icon-lx-down"></i> 下载全部</el-button>
             </div>
             <el-table :data="dataList" border class="table" ref="multipleTable"
                       @selection-change="handleSelectionChange">
                 <!--<el-table-column type="selection" width="55" align="center"></el-table-column>-->
-                <el-table-column prop="title" label="标题" width="120">
+                <el-table-column prop="title" label="标题" width="300">
                 </el-table-column>
                 <el-table-column prop="merchant" label="商家">
                 </el-table-column>
-                <el-table-column prop="date" label="日期" sortable width="150">
+                <!--<el-table-column prop="zuanZhanExpose" label="钻展曝光" width="120">-->
+                <!--</el-table-column>-->
+                <!--<el-table-column prop="mingXingDianPuExpose" label="明星店铺曝光" width="120">-->
+                <!--</el-table-column>-->
+                <!--<el-table-column prop="pinPaiLeiDaExpose" label="品牌雷达曝光" width="120">-->
+                <!--</el-table-column>-->
+                <!--<el-table-column prop="yiYeBaPingExpose" label="一夜霸屏曝光" width="120">-->
+                <!--</el-table-column>-->
+                <!--<el-table-column prop="youHaoHuoExpose" label="有好货曝光" width="120">-->
+                <!--</el-table-column>-->
+                <!--<el-table-column prop="jvHuaSuanExpose" label="聚划算曝光" width="120">-->
+                <!--</el-table-column>-->
+                <!--<el-table-column prop="taoQiangGouExpose" label="淘抢购曝光" width="120">-->
+                <!--</el-table-column>-->
+                <!--<el-table-column prop="tianHeJiHuaExpose" label="天合计划曝光" width="120">-->
+                <!--</el-table-column>-->
+                <el-table-column prop="date" label="日期" sortable>
                 </el-table-column>
                 <el-table-column label="操作" width="180" align="center">
                     <template slot-scope="scope">
                         <el-button type="text" icon="el-icon-down"
-                                   @click="downloadDataMergeCsv(scope.$index, scope.row)">下载
+                                   @click="downloadOneMediaTouchPointCsvByTitle(scope.$index, scope.row)">
+                            <i class="el-icon-lx-down"></i>下载
                         </el-button>
                     </template>
                 </el-table-column>
@@ -39,16 +57,17 @@
 
 <script>
     import {
-        getAllDataMerge,
-        getDataMergeByMerchant,
-        downloadAllDataMergeCsvByMerchant,
-        downloadOneDataMergeCsvByTitle
-    } from "../../../api/DataMerge";
+        getAllMediaTouchPoint,
+        getMediaTouchPointByMerchant,
+        downloadAllMediaTouchPointCsvByMerchant,
+        downloadOneMediaTouchPointCsvByTitle
+    } from "../../../api/MediaTouchPoint";
 
     export default {
-        name: 'DataMergetable',
+        name: 'MediaTouchPointtable',
         data() {
             return {
+                downloadAll:false,
                 dataList: [],
                 url: './vuetable.json',
                 selectMerchant: '',
@@ -56,33 +75,36 @@
             }
         },
         methods: {
-            getAllDataMerge() {
-                getAllDataMerge()
+            getAllMediaTouchPoint() {
+                getAllMediaTouchPoint()
                     .then(data => {
                         console.log(data);
                         this.dataList = data.data
                     })
             },
-            getDataMergeByMerchant() {
-                getDataMergeByMerchant(this.selectMerchant)
+            getMediaTouchPointByMerchant() {
+                getMediaTouchPointByMerchant(this.selectMerchant)
                     .then(data => {
                         console.log(data);
-                        this.dataList = data.data
+                        this.dataList = data.data;
+                        if (data.data != ""){
+                            this.downloadAll = true;
+                        }
                     })
             },
-            downloadOneDataMergeCsvByTitle(index, row) {
+            downloadOneMediaTouchPointCsvByTitle(index, row) {
                 console.log(index);
                 console.log(row);
-                downloadOneDataMergeCsvByTitle(row.title)
+                downloadOneMediaTouchPointCsvByTitle(row.title)
                     .then(data => {
                         console.log(data);
                         this.downloadFile(data.data);
                     })
             },
-            downloadAllDataMergeCsvByMerchant(index, row) {
+            downloadAllMediaTouchPointCsvByMerchant(index, row) {
                 console.log(index);
                 console.log(row);
-                downloadAllDataMergeCsvByMerchant(this.selectMerchant)
+                downloadAllMediaTouchPointCsvByMerchant(this.selectMerchant)
                     .then(data => {
                         console.log(data);
                         this.downloadFile(data.data);
@@ -103,7 +125,7 @@
             },
         },
         mounted() {
-            this.getAllDataMerge();
+            this.getAllMediaTouchPoint();
         },
     }
 

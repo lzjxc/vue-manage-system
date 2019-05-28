@@ -44,12 +44,12 @@
                     //     title: '系统首页'
                     // },
                     {
-                        icon: 'el-icon-lx-cascades',
+                        icon: 'el-icon-lx-comment',
                         index: 'table',
                         title: '评论数据'
                     },
                     {
-                        icon: 'el-icon-lx-cascades',
+                        icon: 'el-icon-lx-pic',
                         index: 'dataMerge',
                         title: '数据融合'
                     },
@@ -59,13 +59,13 @@
                     //     title: 'tab选项卡'
                     // },
                     {
-                        icon: 'el-icon-lx-calendar',
+                        icon: 'el-icon-lx-apps',
                         index: '3',
                         title: '媒介触点',
                         subs: [
                             {
-                                index: 'payedAD',
-                                title: '付费广告'
+                                index: 'mediaTouchPoint',
+                                title: '媒介触点'
                             },
                             {
                                 index: 'contentManagement',
