@@ -11,6 +11,8 @@
                 <el-select v-model="selectMerchant" placeholder="选择商家" @change="downloadAll=false" class="handle-select mr10" clearable @clear="getAllMediaTouchPoint()">
                     <el-option key="1" label="abckids" value="abckids"></el-option>
                     <el-option key="2" label="科大讯飞" value="科大讯飞"></el-option>
+                    <el-option key="3" label="青蛙王子" value="frogprince"></el-option>
+                    <el-option key="4" label="川宁" value="twinings"></el-option>
                 </el-select>
                 <!--<el-input v-model="select_word" placeholder="筛选关键词" class="handle-input mr10"></el-input>-->
                 <el-button type="primary"  @click="getMediaTouchPointByMerchant()"><i class="el-icon-lx-search"></i> 搜索</el-button>
@@ -33,9 +35,14 @@
                                    @click="downloadOneMediaTouchPointCsvByTitle(scope.$index, scope.row)">
                             <i class="el-icon-lx-down"></i>下载
                         </el-button>
+                        <el-button type="text" icon="el-icon-delete" class="red" @click="deleteOneMediaTouchById(scope.$index, scope.row)">删除</el-button>
                     </template>
                 </el-table-column>
             </el-table>
+        </div>
+        <div class="pagination">
+            <el-pagination background @current-change="handleCurrentChange" layout="prev, pager, next" :total="1000">
+            </el-pagination>
         </div>
 
     </div>
@@ -46,6 +53,7 @@
         getAllMediaTouchPoint,
         getMediaTouchPointByMerchant,
         downloadAllMediaTouchPointCsvByMerchant,
+        deleteOneMediaTouchById,
         downloadOneMediaTouchPointCsvByTitle
     } from "../../../api/MediaTouchPoint";
     import Schart from 'vue-schart';
@@ -91,9 +99,7 @@
                         this.downloadFile(data.data);
                     })
             },
-            downloadAllMediaTouchPointCsvByMerchant(index, row) {
-                console.log(index);
-                console.log(row);
+            downloadAllMediaTouchPointCsvByMerchant() {
                 downloadAllMediaTouchPointCsvByMerchant(this.selectMerchant)
                     .then(data => {
                         console.log(data);
@@ -113,6 +119,13 @@
                 document.body.appendChild(link);
                 link.click()
             },
+            deleteOneMediaTouchById(index,row){
+                console.log(index);
+                console.log(row);
+                deleteOneMediaTouchById(row.id);
+                this.getAllMediaTouchPoint();
+                this.$forceUpdate();
+            }
         },
         mounted() {
             this.getAllMediaTouchPoint();

@@ -31,7 +31,7 @@ export default new Router({
                 },
                 {
                     path: '/dataMerge',
-                    component: resolve => require(['../components/page/DataMerge2.vue'], resolve),
+                    component: resolve => require(['../components/page/DataMerge.vue'], resolve),
                     meta: { title: '数据融合' }
                 },
                 {

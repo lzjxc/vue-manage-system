@@ -12,6 +12,8 @@
                            class="handle-select mr10" clearable @clear="getAllNewAndOldCustomer()">
                     <el-option key="1" label="abckids" value="abckids"></el-option>
                     <el-option key="2" label="科大讯飞" value="科大讯飞"></el-option>
+                    <el-option key="3" label="青蛙王子" value="frogprince"></el-option>
+                    <el-option key="4" label="川宁" value="twinings"></el-option>
                 </el-select>
                 <!--<el-input v-model="select_word" placeholder="筛选关键词" class="handle-input mr10"></el-input>-->
                 <el-button type="primary" @click="getNewAndOldCustomerByMerchant()"><i class="el-icon-lx-search"></i> 搜索
@@ -26,6 +28,12 @@
                 <el-table-column prop="title" label="标题" width="300">
                 </el-table-column>
                 <el-table-column prop="merchant" label="商家">
+                </el-table-column>
+                <el-table-column prop="historyAI" label="历史AI">
+                </el-table-column>
+                <el-table-column prop="historyPL" label="历史PL">
+                </el-table-column>
+                <el-table-column prop="newAI" label="新增AI">
                 </el-table-column>
                 <el-table-column prop="date" label="日期" sortable>
                 </el-table-column>
