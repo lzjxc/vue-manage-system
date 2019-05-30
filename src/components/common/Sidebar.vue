@@ -43,11 +43,11 @@
                     //     index: 'dashboard',
                     //     title: '系统首页'
                     // },
-                    {
-                        icon: 'el-icon-lx-comment',
-                        index: 'table',
-                        title: '评论数据'
-                    },
+                    // {
+                    //     icon: 'el-icon-lx-comment',
+                    //     index: 'table',
+                    //     title: '评论数据'
+                    // },
                     // {
                     //     icon: 'el-icon-lx-pic',
                     //     index: 'dataMerge',
@@ -58,6 +58,51 @@
                     //     index: 'tabs',
                     //     title: 'tab选项卡'
                     // },
+                    {
+                        icon: 'el-icon-lx-pic',
+                        index: '1',
+                        title: '消费者人群趋势',
+                        subs: [
+                            {
+                                index: 'consumerTrendAware',
+                                title: '认知'
+                            },
+                            // {
+                            //     index: 'interest',
+                            //     title: '兴趣'
+                            // },
+                            // {
+                            //     index: 'purchase',
+                            //     title: '购买'
+                            // },
+                            // {
+                            //     index: 'loyal',
+                            //     title: '忠诚'
+                            // },
+                            // {
+                            //     index: 'offlineTouchPoint',
+                            //     title: '线下触点'
+                            // },
+                            //         {
+                            //             index: '3-2',
+                            //             title: '三级菜单',
+                            //             subs: [
+                            //                 {
+                            //                     index: 'editor',
+                            //                     title: '富文本编辑器'
+                            //                 },
+                            //                 {
+                            //                     index: 'markdown',
+                            //                     title: 'markdown编辑器'
+                            //                 },
+                            //             ]
+                            //         },
+                            //         {
+                            //             index: 'upload',
+                            //             title: '文件上传'
+                            //         }
+                        ]
+                    },
                     {
                         icon: 'el-icon-lx-apps',
                         index: '3',

@@ -6,6 +6,12 @@
             </el-breadcrumb>
         </div>
         <div class="container">
+            <div class="echarts">
+                <IEcharts
+                        :option="line"
+                        :loading="loading"
+                />
+            </div>
             <div class="handle-box">
                 <!--<el-button type="primary" icon="delete" class="handle-del mr10" @click="delAll">批量删除</el-button>-->
                 <el-select v-model="selectMerchant" placeholder="选择商家" @change="downloadAll=false"
@@ -52,23 +58,43 @@
 </template>
 
 <script>
+    import IEcharts from 'vue-echarts-v3/src/full.js';
     import {
         getAllNewAndOldCustomer,
         getNewAndOldCustomerByMerchant,
         downloadAllNewAndOldCustomerCsvByMerchant,
         downloadOneNewAndOldCustomerCsvByTitle
     } from "../../../api/NewAndOldCustomer";
-    import Schart from 'vue-schart';
 
     export default {
 
         name: 'NewAndOldCustomertable',
         components: {
-            Schart
+            IEcharts
         },
         data() {
             return {
-
+                loading: false,
+                line: {
+                    title: {
+                        text: '新老客趋势'
+                    },
+                    tooltip: {},
+                    xAxis: {
+                        data: []
+                    },
+                    yAxis: {},
+                    series: [{
+                        name: '',
+                        type: 'line',
+                        data: []
+                    },
+                        {
+                            name: '',
+                            type: 'line',
+                            data: []
+                        }]
+                },
                 downloadAll: false,
                 dataList: [],
                 url: './vuetable.json',
@@ -92,6 +118,33 @@
                         if (data.data != "") {
                             this.downloadAll = true;
                         }
+                        let str = "days"
+                        let xAxisData= [];
+                        let seriesDataHistoryAI = [];
+                        let seriesDataHistoryPL = [];
+                        console.log(data.data);
+                        console.log(data.data.length);
+                        let dataListLen = data.data.length;
+                        for (let i=0; i<dataListLen; i++){
+                            if(data.data[i].date.indexOf("days") == -1) {
+                                xAxisData.push(data.data[i].date)
+                            }
+                        }
+                        for (let i=0; i<dataListLen; i++){
+                            if(data.data[i].date.indexOf("days") == -1) {
+                                seriesDataHistoryAI.push(data.data[i].historyAI);
+                                seriesDataHistoryPL.push(data.data[i].historyPL);
+                            }
+
+                        }
+                        console.log(xAxisData);
+                        console.log(this.line);
+                        console.log(seriesDataHistoryAI);
+                        this.line.xAxis.data = xAxisData;
+                        this.line.series[0].data = seriesDataHistoryAI;
+                        this.line.series[0].name = "历史AI";
+                        this.line.series[1].data = seriesDataHistoryPL;
+                        this.line.series[1].name = "历史购买";
                     })
             },
             downloadOneNewAndOldCustomerCsvByTitle(index, row) {
@@ -163,5 +216,9 @@
 
     .mr10 {
         margin-right: 10px;
+    }
+    .echarts {
+        width: 1000px;
+        height: 400px;
     }
 </style>

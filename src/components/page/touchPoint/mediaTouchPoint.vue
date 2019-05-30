@@ -6,6 +6,12 @@
             </el-breadcrumb>
         </div>
         <div class="container">
+            <!--<div class="echarts">-->
+                <!--<IEcharts-->
+                        <!--:option="line"-->
+                        <!--:loading="loading"-->
+                <!--/>-->
+            <!--</div>-->
             <div class="handle-box">
                 <!--<el-button type="primary" icon="delete" class="handle-del mr10" @click="delAll">批量删除</el-button>-->
                 <el-select v-model="selectMerchant" placeholder="选择商家" @change="downloadAll=false" class="handle-select mr10" clearable @clear="getAllMediaTouchPoint()">
@@ -32,7 +38,7 @@
                 <el-table-column label="操作" width="180" align="center">
                     <template slot-scope="scope">
                         <el-button type="text" icon="el-icon-down"
-                                   @click="downloadOneMediaTouchPointCsvByTitle(scope.$index, scope.row)">
+                                   @click="downloadOneMediaTouchPointCsvById(scope.$index, scope.row)">
                             <i class="el-icon-lx-down"></i>下载
                         </el-button>
                         <el-button type="text" icon="el-icon-delete" class="red" @click="deleteOneMediaTouchById(scope.$index, scope.row)" >删除</el-button>
@@ -40,31 +46,47 @@
                 </el-table-column>
             </el-table>
         </div>
-        <div class="pagination">
-            <el-pagination background @current-change="handleCurrentChange" layout="prev, pager, next" :total="1000">
-            </el-pagination>
-        </div>
+        <!--<div class="pagination">-->
+            <!--<el-pagination background @current-change="handleCurrentChange" layout="prev, pager, next" :total="1000">-->
+            <!--</el-pagination>-->
+        <!--</div>-->
 
     </div>
 </template>
 
 <script>
+    import IEcharts from 'vue-echarts-v3/src/full.js';
     import {
         getAllMediaTouchPoint,
         getMediaTouchPointByMerchant,
         downloadAllMediaTouchPointCsvByMerchant,
         deleteOneMediaTouchById,
-        downloadOneMediaTouchPointCsvByTitle
+        downloadOneMediaTouchPointCsvById
     } from "../../../api/MediaTouchPoint";
-    import Schart from 'vue-schart';
     export default {
 
         name: 'MediaTouchPointtable',
         components: {
-            Schart
+            IEcharts
         },
         data() {
             return {
+                loading: false,
+                line: {
+                    title: {
+                        text: 'ECharts Hello World'
+                    },
+                    tooltip: {},
+                    xAxis: {
+                        data: ['Shirt', 'Sweater', 'Chiffon Shirt', 'Pants', 'High Heels', 'Socks']
+                    },
+                    yAxis: {},
+                    series: [{
+                        name: 'Sales',
+                        type: 'line',
+                        data: [5]
+                    }]
+                },
                 downloadAll:false,
                 dataList: [],
                 url: './vuetable.json',
@@ -77,7 +99,24 @@
                 getAllMediaTouchPoint()
                     .then(data => {
                         console.log(data);
-                        this.dataList = data.data
+                        this.dataList = data.data;
+                        let xAxisData = [];
+                        let seriesData = [];
+                        console.log(data.data);
+                        console.log(data.data.length);
+                        let dataListLen = data.data.length;
+                        for (let i=0; i<dataListLen; i++){
+                            xAxisData.push(data.data[i].date)
+                        }
+                        for (let i=0; i<dataListLen; i++){
+                            seriesData.push(data.data[i].juHuaSuanExpose)
+                        }
+                        console.log(xAxisData);
+                        console.log(this.line);
+                        console.log(seriesData);
+                        this.line.xAxis.data = xAxisData;
+                        this.line.series[0].data = seriesData;
+                        this.line.series[0].name = "juHuaSuanExpose";
                     })
             },
             getMediaTouchPointByMerchant() {
@@ -90,10 +129,10 @@
                         }
                     })
             },
-            downloadOneMediaTouchPointCsvByTitle(index, row) {
+            downloadOneMediaTouchPointCsvById(index, row) {
                 console.log(index);
                 console.log(row);
-                downloadOneMediaTouchPointCsvByTitle(row.title)
+                downloadOneMediaTouchPointCsvById(row.Id)
                     .then(data => {
                         console.log(data);
                         this.downloadFile(data.data);
@@ -173,5 +212,10 @@
 
     .mr10 {
         margin-right: 10px;
+    }
+
+    .echarts {
+        width: 1000px;
+        height: 400px;
     }
 </style>
