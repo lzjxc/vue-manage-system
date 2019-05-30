@@ -43,11 +43,11 @@
                     //     index: 'dashboard',
                     //     title: '系统首页'
                     // },
-                    // {
-                    //     icon: 'el-icon-lx-comment',
-                    //     index: 'table',
-                    //     title: '评论数据'
-                    // },
+                    {
+                        icon: 'el-icon-lx-comment',
+                        index: 'table',
+                        title: '评论数据'
+                    },
                     // {
                     //     icon: 'el-icon-lx-pic',
                     //     index: 'dataMerge',
@@ -58,15 +58,15 @@
                     //     index: 'tabs',
                     //     title: 'tab选项卡'
                     // },
-                    {
-                        icon: 'el-icon-lx-pic',
-                        index: '1',
-                        title: '消费者人群趋势',
-                        subs: [
-                            {
-                                index: 'consumerTrendAware',
-                                title: '认知'
-                            },
+                    // {
+                    //     icon: 'el-icon-lx-pic',
+                    //     index: '1',
+                    //     title: '消费者人群趋势',
+                    //     subs: [
+                    //         {
+                    //             index: 'consumerTrendAware',
+                    //             title: '认知'
+                    //         },
                             // {
                             //     index: 'interest',
                             //     title: '兴趣'
@@ -101,8 +101,8 @@
                             //             index: 'upload',
                             //             title: '文件上传'
                             //         }
-                        ]
-                    },
+                        // ]
+                    // },
                     {
                         icon: 'el-icon-lx-apps',
                         index: '3',
@@ -146,8 +146,8 @@
                             //             index: 'upload',
                             //             title: '文件上传'
                             //         }
-                        ]
-                    },
+                         ]
+                     },
                     // {
                     //      icon: 'el-icon-lx-calendar',
                     //     index: '4',
