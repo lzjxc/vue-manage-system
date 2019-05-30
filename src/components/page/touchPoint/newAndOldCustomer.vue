@@ -6,7 +6,7 @@
             </el-breadcrumb>
         </div>
         <div class="container">
-            <div class="echarts">
+            <div class="echarts" v-if="downloadAll">
                 <IEcharts
                         :option="line"
                         :loading="loading"
