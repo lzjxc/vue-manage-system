@@ -48,11 +48,11 @@
                         index: 'table',
                         title: '评论数据'
                     },
-                    {
-                        icon: 'el-icon-lx-pic',
-                        index: 'dataMerge',
-                        title: '数据融合'
-                    },
+                    // {
+                    //     icon: 'el-icon-lx-pic',
+                    //     index: 'dataMerge',
+                    //     title: '数据融合'
+                    // },
                     // {
                     //     icon: 'el-icon-lx-copy',
                     //     index: 'tabs',
@@ -71,18 +71,18 @@
                                 index: 'newAndOldCustomer',
                                 title: '新老客'
                             },
-                            {
-                                index: 'tianMaoPlatform',
-                                title: '天猫营销平台'
-                            },
-                            {
-                                index: 'sellingChannel',
-                                title: '销售渠道'
-                            },
-                            {
-                                index: 'offlineTouchPoint',
-                                title: '线下触点'
-                            },
+                            // {
+                            //     index: 'tianMaoPlatform',
+                            //     title: '天猫营销平台'
+                            // },
+                            // {
+                            //     index: 'sellingChannel',
+                            //     title: '销售渠道'
+                            // },
+                            // {
+                            //     index: 'offlineTouchPoint',
+                            //     title: '线下触点'
+                            // },
                             //         {
                             //             index: '3-2',
                             //             title: '三级菜单',
@@ -103,15 +103,15 @@
                             //         }
                         ]
                     },
-                    {
-                         icon: 'el-icon-lx-calendar',
-                        index: '4',
-                        title: '表单相关',
-                        subs: [
-                            {
-                                index: 'form',
-                                title: '基本表单'
-                            },
+                    // {
+                    //      icon: 'el-icon-lx-calendar',
+                    //     index: '4',
+                    //     title: '表单相关',
+                    //     subs: [
+                    //         {
+                    //             index: 'form',
+                    //             title: '基本表单'
+                    //         },
                     //         {
                     //             index: '3-2',
                     //             title: '三级菜单',
@@ -130,8 +130,8 @@
                     //             index: 'upload',
                     //             title: '文件上传'
                     //         }
-                        ]
-                    },
+                    //     ]
+                    // },
                     //     icon: 'el-icon-lx-emoji',
                     //     index: 'icon',
                     //     title: '自定义图标'

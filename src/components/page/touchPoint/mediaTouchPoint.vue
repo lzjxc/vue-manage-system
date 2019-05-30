@@ -35,7 +35,7 @@
                                    @click="downloadOneMediaTouchPointCsvByTitle(scope.$index, scope.row)">
                             <i class="el-icon-lx-down"></i>下载
                         </el-button>
-                        <el-button type="text" icon="el-icon-delete" class="red" @click="deleteOneMediaTouchById(scope.$index, scope.row)">删除</el-button>
+                        <el-button type="text" icon="el-icon-delete" class="red" @click="deleteOneMediaTouchById(scope.$index, scope.row)" >删除</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -119,12 +119,21 @@
                 document.body.appendChild(link);
                 link.click()
             },
+            handleSelectionChange(){
+                this.getAllMediaTouchPoint();
+            },
             deleteOneMediaTouchById(index,row){
                 console.log(index);
                 console.log(row);
                 deleteOneMediaTouchById(row.id);
-                this.getAllMediaTouchPoint();
-                this.$forceUpdate();
+                if (this.selectMerchant){
+                    this.dataList=[];
+                    this.getMediaTouchPointByMerchant(this.selectMerchant);
+                }
+                else{
+                    this.dataList=[];
+                    this.getAllMediaTouchPoint();
+                }
             }
         },
         mounted() {
