@@ -30,7 +30,7 @@ export default new Router({
                     meta: { title: '评论数据' }
                 },
                 {
-                    path: '/dataMerge',
+                    path: '/DataMerge',
                     component: resolve => require(['../components/page/DataMerge.vue'], resolve),
                     meta: { title: '数据融合' }
                 },

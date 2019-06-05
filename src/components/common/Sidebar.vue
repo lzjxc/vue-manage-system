@@ -48,11 +48,11 @@
                         index: 'table',
                         title: '评论数据'
                     },
-                    // {
-                    //     icon: 'el-icon-lx-pic',
-                    //     index: 'dataMerge',
-                    //     title: '数据融合'
-                    // },
+                    {
+                        icon: 'el-icon-lx-pic',
+                        index: 'dataMerge',
+                        title: '数据融合'
+                    },
                     // {
                     //     icon: 'el-icon-lx-copy',
                     //     index: 'tabs',
@@ -148,6 +148,53 @@
                             //         }
                          ]
                      },
+                    {
+                        icon: 'el-icon-lx-copy',
+                        index: '4',
+                        title: '累积数据',
+                        subs: [
+                                {index:'4-2',
+                                title:'历史PL累计数据',
+                                subs:[{
+                                    index: 'HistoryPLPeoplePortrait',
+                                    title: '历史PL人群画像'
+                                },
+                                    {
+                                        index: 'HistoryPPeopleStructure',
+                                        title: '历史P人群构成'
+                                    },
+                                ]},
+                        ]
+                    },
+                    {
+                         icon: 'el-icon-lx-calendar',
+                        index: '5',
+                        title: '表单相关',
+                        subs: [
+                            {
+                                index: 'report',
+                                title: '报告'
+                            },
+                            // {
+                            //     index: '3-2',
+                            //     title: '三级菜单',
+                            //     subs: [
+                            //         {
+                            //             index: 'editor',
+                            //             title: '富文本编辑器'
+                            //         },
+                            //         {
+                            //             index: 'markdown',
+                            //             title: 'markdown编辑器'
+                            //         },
+                            //     ]
+                            // },
+                            // {
+                            //     index: 'upload',
+                            //     title: '文件上传'
+                            // }
+                        ]
+                    },
                     // {
                     //      icon: 'el-icon-lx-calendar',
                     //     index: '4',
@@ -177,10 +224,11 @@
                     //         }
                     //     ]
                     // },
-                    //     icon: 'el-icon-lx-emoji',
-                    //     index: 'icon',
-                    //     title: '自定义图标'
-                    // },
+                    {
+                        icon: 'el-icon-lx-emoji',
+                        index: 'icon',
+                        title: '自定义图标'
+                    },
                     // {
                     //     icon: 'el-icon-pie-chart',
                     //     index: 'charts',

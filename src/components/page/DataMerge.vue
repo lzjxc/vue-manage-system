@@ -7,22 +7,20 @@
         </div>
         <div class="container">
             <div class="handle-box">
-                <!--<el-button type="primary" icon="delete" class="handle-del mr10" @click="delAll">批量删除</el-button>-->
                 <el-select v-model="selectMerchant" placeholder="选择商家" @change="downloadAll=false"
-                           class="handle-select mr10" clearable @clear="getAllDataMerge()">
-                    <el-option key="1" label="abckids" value="abckids"></el-option>
+                           class="handle-select mr10" clearable @clear="getAllDataMergePeoplePerspective()">
+                    <el-option key="1" label="abckid" value="abckid"></el-option>
                     <el-option key="2" label="科大讯飞" value="科大讯飞"></el-option>
                 </el-select>
-                <!--<el-input v-model="select_word" placeholder="筛选关键词" class="handle-input mr10"></el-input>-->
-                <el-button type="primary" @click="getDataMergeByMerchant()"><i class="el-icon-lx-search"></i> 搜索
+                <el-button type="primary" @click="getDataMergePeoplePerspectiveByMerchant()"><i class="el-icon-lx-search"></i> 搜索
                 </el-button>
-                <el-button type="primary" v-if="downloadAll" @click="downloadAllDataMergeCsvByMerchant()"><i
-                        class="el-icon-lx-down"></i> 下载全部
+                <el-button type="primary" v-if="downloadAll"
+                           @click="downloadAllDataMergePeoplePerspectiveCsvByMerchant()"><i class="el-icon-lx-down"></i>
+                    下载全部
                 </el-button>
             </div>
             <el-table :data="dataList" border class="table" ref="multipleTable"
                       @selection-change="handleSelectionChange">
-                <!--<el-table-column type="selection" width="55" align="center"></el-table-column>-->
                 <el-table-column prop="title" label="标题" width="300">
                 </el-table-column>
                 <el-table-column prop="merchant" label="商家">
@@ -32,9 +30,12 @@
                 <el-table-column label="操作" width="180" align="center">
                     <template slot-scope="scope">
                         <el-button type="text" icon="el-icon-down"
-                                   @click="downloadOneDataMergeCsvByTitle(scope.$index, scope.row)">
+                                   @click="downloadOneDataMergePeoplePerspectiveCsvById(scope.$index, scope.row)">
                             <i class="el-icon-lx-down"></i>下载
                         </el-button>
+                        <!--<el-button type="text" icon="el-icon-delete" class="red"-->
+                                   <!--@click="deleteOneMediaTouchById(scope.$index, scope.row)">删除-->
+                        <!--</el-button>-->
                     </template>
                 </el-table-column>
             </el-table>
@@ -45,19 +46,18 @@
 
 <script>
     import {
-        downloadAllDataMergeCsvByMerchant,
-        downloadOneDataMergeCsvByTitle,
-        getAllDataMerge,
-        getDataMergeByMerchant
-    } from "../../api/DataMerge";
-    import Schart from 'vue-schart';
+        getAllDataMergePeoplePerspective,
+        getDataMergePeoplePerspectiveByMerchant,
+        downloadAllDataMergePeoplePerspectiveCsvByMerchant,
+        downloadOneDataMergePeoplePerspectiveCsvById,
+        deleteOneDataMergePeoplePerspectiveById
+    } from "../../api/DataMergePeoplePerspective";
+
 
     export default {
 
-        name: 'DataMergetable',
-        components: {
-            Schart
-        },
+        name: 'DataMergeTable',
+
         data() {
             return {
                 downloadAll: false,
@@ -68,44 +68,36 @@
             }
         },
         methods: {
-            getAllDataMerge() {
-                getAllDataMerge()
+            getAllDataMergePeoplePerspective() {
+                getAllDataMergePeoplePerspective()
                     .then(data => {
                         console.log(data);
                         this.dataList = data.data
                     })
             },
-            getDataMergeByMerchant() {
-                getDataMergeByMerchant(this.selectMerchant)
+            getDataMergePeoplePerspectiveByMerchant() {
+                getDataMergePeoplePerspectiveByMerchant(this.selectMerchant)
                     .then(data => {
-                        console.log(this.data1[0]);
                         console.log(data);
-                        console.log(data.data[0]);
-                        console.log(data.data[0].date);
-                        console.log(data.data[0].juHuaSuanExpose);
                         this.dataList = data.data;
-                        this.data1[0].name = data.data[0].date;
-                        this.data1[0].value = data.data[0].juHuaSuanExpose;
-                        console.log(this.data1.data[0]);
-
                         if (data.data != "") {
                             this.downloadAll = true;
                         }
                     })
             },
-            downloadOneDataMergeCsvByTitle(index, row) {
+            downloadOneDataMergePeoplePerspectiveCsvById(index, row) {
                 console.log(index);
                 console.log(row);
-                downloadOneDataMergeCsvByTitle(row.title)
+                downloadOneDataMergePeoplePerspectiveCsvById(row.id)
                     .then(data => {
                         console.log(data);
                         this.downloadFile(data.data);
                     })
             },
-            downloadAllDataMergeCsvByMerchant(index, row) {
+            downloadAllDataMergePeoplePerspectiveCsvByMerchant(index, row) {
                 console.log(index);
                 console.log(row);
-                downloadAllDataMergeCsvByMerchant(this.selectMerchant)
+                downloadAllDataMergePeoplePerspectiveCsvByMerchant(this.selectMerchant)
                     .then(data => {
                         console.log(data);
                         this.downloadFile(data.data);
@@ -124,9 +116,22 @@
                 document.body.appendChild(link);
                 link.click()
             },
+            // deleteOneMediaTouchById(index, row) {
+            //     console.log(index);
+            //     console.log(row);
+            //     deleteOneDataMergePeoplePerspectiveById(row.id);
+            //     if (this.selectMerchant) {
+            //         this.dataList = [];
+            //         this.getDataMergePeoplePerspectiveByMerchant(this.selectMerchant);
+            //     }
+            //     else {
+            //         this.dataList = [];
+            //         this.getAllDataMergePeoplePerspective();
+            //     }
+            // },
         },
         mounted() {
-            this.getAllDataMerge();
+            this.getAllDataMergePeoplePerspective();
         },
     }
 

@@ -12,6 +12,6 @@ export const downloadAllMediaTouchPointCsvByMerchant = params => {
 export const downloadOneMediaTouchPointCsvById = params => {
     return axios.get(`/api/MediaTouchPoint/downloadOneMediaTouchPointCsvById?id=` + params);
 };
-export const deleteOneMediaTouchById = params => {
-    return axios.get(`/api/MediaTouchPoint/deleteOneMediaTouchById?id=` + params);
+export const deleteOneMediaTouchPointById = params => {
+    return axios.get(`/api/MediaTouchPoint/deleteOneMediaTouchPointById?id=` + params);
 };
