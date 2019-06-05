@@ -45,6 +45,16 @@ export default new Router({
                     meta: { title: '新老客' }
                 },
                 {
+                    path: '/historyPurchasePeopleConstitute',
+                    component: resolve => require(['../components/page/accumulateData/historyPurchasePeopleConstitute.vue'], resolve),
+                    meta: { title: '历史P人群构成' }
+                },
+                {
+                    path: '/brandReport',
+                    component: resolve => require(['../components/page/report/BrandReport.vue'], resolve),
+                    meta: { title: '品牌报告' }
+                },
+                {
                     path: '/contentManagement',
                     component: resolve => require(['../components/page/touchPoint/contentManagement.vue'], resolve),
                     meta: { title: '内容运营' }

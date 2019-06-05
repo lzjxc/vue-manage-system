@@ -8,15 +8,16 @@
         <div class="container">
             <div class="handle-box">
                 <el-select v-model="selectMerchant" placeholder="选择商家" @change="downloadAll=false"
-                           class="handle-select mr10" clearable @clear="getAllHistoryPurchaseCrowdConstitute()">
+                           class="handle-select mr10" clearable @clear="getAllHistoryPurchasePeopleConstitute()">
                     <el-option key="1" label="abckid" value="abckid"></el-option>
                     <el-option key="2" label="科大讯飞" value="科大讯飞"></el-option>
+                    <el-option key="3" label="青蛙王子" value="青蛙王子"></el-option>
                 </el-select>
-                <el-button type="primary" @click="getHistoryPurchaseCrowdConstituteByMerchant()"><i
+                <el-button type="primary" @click="getHistoryPurchasePeopleConstituteByMerchant()"><i
                         class="el-icon-lx-search"></i> 搜索
                 </el-button>
                 <el-button type="primary" v-if="downloadAll"
-                           @click="downloadAllHistoryPurchaseCrowdConstituteCsvByMerchant()"><i
+                           @click="downloadAllHistoryPurchasePeopleConstituteCsvByMerchant()"><i
                         class="el-icon-lx-down"></i>
                     下载全部
                 </el-button>
@@ -32,7 +33,7 @@
                 <el-table-column label="操作" width="180" align="center">
                     <template slot-scope="scope">
                         <el-button type="text" icon="el-icon-down"
-                                   @click="downloadOneHistoryPurchaseCrowdConstituteCsvById(scope.$index, scope.row)">
+                                   @click="downloadOneHistoryPurchasePeopleConstituteCsvById(scope.$index, scope.row)">
                             <i class="el-icon-lx-down"></i>下载
                         </el-button>
                         <!--<el-button type="text" icon="el-icon-delete" class="red"-->
@@ -48,11 +49,11 @@
 
 <script>
     import {
-        getAllHistoryPurchaseCrowdConstitute,
-        getHistoryPurchaseCrowdConstituteByMerchant,
-        downloadAllHistoryPurchaseCrowdConstituteCsvByMerchant,
-        downloadOneHistoryPurchaseCrowdConstituteCsvById
-    } from "../../api/HistoryPurchaseCrowdConstitute";
+        getAllHistoryPurchasePeopleConstitute,
+        getHistoryPurchasePeopleConstituteByMerchant,
+        downloadAllHistoryPurchasePeopleConstituteCsvByMerchant,
+        downloadOneHistoryPurchasePeopleConstituteCsvById
+    } from "../../../api/HistoryPurchasePeopleConstitute";
 
 
     export default {
@@ -69,15 +70,15 @@
             }
         },
         methods: {
-            getAllHistoryPurchaseCrowdConstitute() {
-                getAllHistoryPurchaseCrowdConstitute()
+            getAllHistoryPurchasePeopleConstitute() {
+                getAllHistoryPurchasePeopleConstitute()
                     .then(data => {
                         console.log(data);
                         this.dataList = data.data
                     })
             },
-            getHistoryPurchaseCrowdConstituteByMerchant() {
-                getHistoryPurchaseCrowdConstituteByMerchant(this.selectMerchant)
+            getHistoryPurchasePeopleConstituteByMerchant() {
+                getHistoryPurchasePeopleConstituteByMerchant(this.selectMerchant)
                     .then(data => {
                         console.log(data);
                         this.dataList = data.data;
@@ -86,19 +87,19 @@
                         }
                     })
             },
-            downloadOneHistoryPurchaseCrowdConstituteCsvById(index, row) {
+            downloadOneHistoryPurchasePeopleConstituteCsvById(index, row) {
                 console.log(index);
                 console.log(row);
-                downloadOneHistoryPurchaseCrowdConstituteCsvById(row.id)
+                downloadOneHistoryPurchasePeopleConstituteCsvById(row.id)
                     .then(data => {
                         console.log(data);
                         this.downloadFile(data.data);
                     })
             },
-            downloadAllHistoryPurchaseCrowdConstituteCsvByMerchant(index, row) {
+            downloadAllHistoryPurchasePeopleConstituteCsvByMerchant(index, row) {
                 console.log(index);
                 console.log(row);
-                downloadAllHistoryPurchaseCrowdConstituteCsvByMerchant(this.selectMerchant)
+                downloadAllHistoryPurchasePeopleConstituteCsvByMerchant(this.selectMerchant)
                     .then(data => {
                         console.log(data);
                         this.downloadFile(data.data);
@@ -120,19 +121,19 @@
             deleteOneMediaTouchById(index, row) {
                 console.log(index);
                 console.log(row);
-                deleteOneHistoryPurchaseCrowdConstituteById(row.id);
+                deleteOneHistoryPurchasePeopleConstituteById(row.id);
                 if (this.selectMerchant) {
                     this.dataList = [];
-                    this.getHistoryPurchaseCrowdConstituteByMerchant(this.selectMerchant);
+                    this.getHistoryPurchasePeopleConstituteByMerchant(this.selectMerchant);
                 }
                 else {
                     this.dataList = [];
-                    this.getAllHistoryPurchaseCrowdConstitute();
+                    this.getAllHistoryPurchasePeopleConstitute();
                 }
             },
         },
         mounted() {
-            this.getAllHistoryPurchaseCrowdConstitute();
+            this.getAllHistoryPurchasePeopleConstitute();
         },
     }
 

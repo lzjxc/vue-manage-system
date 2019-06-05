@@ -160,7 +160,7 @@
                                     title: '历史PL人群画像'
                                 },
                                     {
-                                        index: 'HistoryPPeopleStructure',
+                                        index: 'historyPurchasePeopleConstitute',
                                         title: '历史P人群构成'
                                     },
                                 ]},
@@ -172,8 +172,12 @@
                         title: '表单相关',
                         subs: [
                             {
-                                index: 'report',
-                                title: '报告'
+                                index: 'BrandReport',
+                                title: '品牌报告'
+                            },
+                            {
+                                index: 'ClassReport',
+                                title: '品牌品类报告'
                             },
                             // {
                             //     index: '3-2',
