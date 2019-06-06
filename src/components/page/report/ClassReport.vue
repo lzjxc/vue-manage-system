@@ -19,15 +19,15 @@ BaseForm.vue<template>
                             <!--<el-option key="imoo" label="imoo" value="imoo"></el-option>-->
                         </el-select>
                     </el-form-item>
-                    <el-form-item label="日期时间">
-                        <el-col :span="11">
-                            <el-date-picker type="date" placeholder="选择日期" v-model="form.date1" style="width: 100%;"></el-date-picker>
-                        </el-col>
-                        <el-col class="line" :span="2">-</el-col>
-                        <el-col :span="11">
-                            <el-time-picker placeholder="选择时间" v-model="form.date2" style="width: 100%;"></el-time-picker>
-                        </el-col>
-                    </el-form-item>
+                    <!--<el-form-item label="日期时间">-->
+                        <!--<el-col :span="11">-->
+                            <!--<el-date-picker type="date" placeholder="选择日期" v-model="form.date1" style="width: 100%;"></el-date-picker>-->
+                        <!--</el-col>-->
+                        <!--<el-col class="line" :span="2">-</el-col>-->
+                        <!--<el-col :span="11">-->
+                            <!--<el-time-picker placeholder="选择时间" v-model="form.date2" style="width: 100%;"></el-time-picker>-->
+                        <!--</el-col>-->
+                    <!--</el-form-item>-->
                     <!--<el-form-item label="json返回文件">-->
                         <!--<el-input type="textarea" rows="5" v-model="form.json"></el-input>-->
                     <!--</el-form-item>-->

@@ -114,7 +114,7 @@
                 let link = document.createElement('a');
                 link.style.display = 'none';
                 link.href = url;
-                link.setAttribute('download', '下载文件.csv');
+                link.setAttribute('download', '下载文件.xls');
                 document.body.appendChild(link);
                 link.click()
             },
