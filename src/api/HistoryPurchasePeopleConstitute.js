@@ -7,8 +7,8 @@ export const getHistoryPurchasePeopleConstituteByMerchant = params => {
     return axios.get(`/api/HistoryPurchasePeopleConstitute/getHistoryPurchasePeopleConstituteByMerchant?merchant=` + params,);
 };
 export const downloadAllHistoryPurchasePeopleConstituteCsvByMerchant = params => {
-    return axios.get(`/api/HistoryPurchasePeopleConstitute/downloadAllHistoryPurchasePeopleConstituteCsvByMerchant?merchant=` + params);
+    return axios.get(`/api/HistoryPurchasePeopleConstitute/downloadAllHistoryPurchasePeopleConstituteCsvByMerchant?merchant=` + params,{responseType: 'blob'});
 };
 export const downloadOneHistoryPurchasePeopleConstituteCsvById = params => {
-    return axios.get(`/api/HistoryPurchasePeopleConstitute/downloadOneHistoryPurchasePeopleConstituteCsvById?id=` + params);
+    return axios.get(`/api/HistoryPurchasePeopleConstitute/downloadOneHistoryPurchasePeopleConstituteCsvById?id=` + params,{responseType: 'blob'});
 };

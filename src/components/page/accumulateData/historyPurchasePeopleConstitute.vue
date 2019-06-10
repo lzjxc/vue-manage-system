@@ -9,9 +9,10 @@
             <div class="handle-box">
                 <el-select v-model="selectMerchant" placeholder="选择商家" @change="downloadAll=false"
                            class="handle-select mr10" clearable @clear="getAllHistoryPurchasePeopleConstitute()">
-                    <el-option key="1" label="abckid" value="abckid"></el-option>
-                    <el-option key="2" label="科大讯飞" value="科大讯飞"></el-option>
+                    <el-option key="1" label="abckids" value="abckids"></el-option>
+                    <el-option key="2" label="南孚" value="南孚"></el-option>
                     <el-option key="3" label="青蛙王子" value="青蛙王子"></el-option>
+                    <el-option key="4" label="川宁" value="川宁"></el-option>
                 </el-select>
                 <el-button type="primary" @click="getHistoryPurchasePeopleConstituteByMerchant()"><i
                         class="el-icon-lx-search"></i> 搜索
@@ -110,11 +111,11 @@
                 if (!data) {
                     return
                 }
-                let url = window.URL.createObjectURL(new Blob([data]));
+                let url = window.URL.createObjectURL(new Blob([data],{type:"application/vnd.ms-excel"}));
                 let link = document.createElement('a');
                 link.style.display = 'none';
                 link.href = url;
-                link.setAttribute('download', '下载文件.xls');
+                link.setAttribute('download', 'downloadFile.xlsx');
                 document.body.appendChild(link);
                 link.click()
             },
