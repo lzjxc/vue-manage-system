@@ -50,6 +50,11 @@ export default new Router({
                     meta: { title: '历史P人群构成' }
                 },
                 {
+                    path: '/quizLogin',
+                    component: resolve => require(['../components/page/report/quizLogin.vue'], resolve),
+                    meta: { title: '小测验' }
+                },
+                {
                     path: '/brandReport',
                     component: resolve => require(['../components/page/report/BrandReport.vue'], resolve),
                     meta: { title: '品牌报告' }

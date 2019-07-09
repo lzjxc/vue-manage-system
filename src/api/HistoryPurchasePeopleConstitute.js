@@ -6,9 +6,9 @@ export const getAllHistoryPurchasePeopleConstitute = params => {
 export const getHistoryPurchasePeopleConstituteByMerchant = params => {
     return axios.get(`/api/HistoryPurchasePeopleConstitute/getHistoryPurchasePeopleConstituteByMerchant?merchant=` + params,);
 };
-export const downloadAllHistoryPurchasePeopleConstituteCsvByMerchant = params => {
-    return axios.get(`/api/HistoryPurchasePeopleConstitute/downloadAllHistoryPurchasePeopleConstituteCsvByMerchant?merchant=` + params,{responseType: 'blob'});
+export const downloadAllHistoryPurchasePeopleConstituteExcelByMerchant = params => {
+    return axios.get(`/api/HistoryPurchasePeopleConstitute/downloadAllHistoryPurchasePeopleConstituteExcelByMerchant?merchant=` + params,{responseType: 'blob'});
 };
-export const downloadOneHistoryPurchasePeopleConstituteCsvById = params => {
-    return axios.get(`/api/HistoryPurchasePeopleConstitute/downloadOneHistoryPurchasePeopleConstituteCsvById?id=` + params,{responseType: 'blob'});
+export const downloadOneHistoryPurchasePeopleConstituteExcelById = params => {
+    return axios.get(`/api/HistoryPurchasePeopleConstitute/downloadOneHistoryPurchasePeopleConstituteExcelById?id=` + params,{responseType: 'blob'});
 };

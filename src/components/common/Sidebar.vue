@@ -176,6 +176,10 @@
                                 title: '品牌报告'
                             },
                             {
+                                index: 'quizLogin',
+                                title: '小测验'
+                            },
+                            {
                                 index: 'ClassReport',
                                 title: '品牌品类报告'
                             },

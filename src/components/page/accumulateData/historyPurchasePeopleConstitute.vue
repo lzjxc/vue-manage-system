@@ -13,28 +13,38 @@
                     <el-option key="2" label="南孚" value="南孚"></el-option>
                     <el-option key="3" label="青蛙王子" value="青蛙王子"></el-option>
                     <el-option key="4" label="川宁" value="川宁"></el-option>
+                    <el-option key="5" label="安佳" value="安佳"></el-option>
+                    <el-option key="6" label="AKOKO" value="AKOKO"></el-option>
                 </el-select>
                 <el-button type="primary" @click="getHistoryPurchasePeopleConstituteByMerchant()"><i
                         class="el-icon-lx-search"></i> 搜索
                 </el-button>
                 <el-button type="primary" v-if="downloadAll"
-                           @click="downloadAllHistoryPurchasePeopleConstituteCsvByMerchant()"><i
+                           @click="downloadAllHistoryPurchasePeopleConstituteExcelByMerchant()"><i
                         class="el-icon-lx-down"></i>
                     下载全部
                 </el-button>
             </div>
             <el-table :data="dataList" border class="table" ref="multipleTable"
                       @selection-change="handleSelectionChange">
-                <el-table-column prop="title" label="标题" width="300">
+                <el-table-column prop="title" label="标题" width="200">
                 </el-table-column>
                 <el-table-column prop="merchant" label="商家">
                 </el-table-column>
-                <el-table-column prop="date" label="日期" sortable>
+                <el-table-column prop="date" label="日期" width="200"sortable>
+                </el-table-column>
+                <el-table-column prop="data.当月购买人数" label="当月购买人数" sortable>
+                </el-table-column>
+                <el-table-column prop="data.历史PL总人数" label="历史PL总人数" sortable>
+                </el-table-column>
+                <el-table-column prop="data.历史PL再购买人数" label="历史PL再购买人数" sortable>
+                </el-table-column>
+                <el-table-column prop="data.新增AI人数" label="新增AI人数" sortable>
                 </el-table-column>
                 <el-table-column label="操作" width="180" align="center">
                     <template slot-scope="scope">
                         <el-button type="text" icon="el-icon-down"
-                                   @click="downloadOneHistoryPurchasePeopleConstituteCsvById(scope.$index, scope.row)">
+                                   @click="downloadOneHistoryPurchasePeopleConstituteExcelById(scope.$index, scope.row)">
                             <i class="el-icon-lx-down"></i>下载
                         </el-button>
                         <!--<el-button type="text" icon="el-icon-delete" class="red"-->
@@ -52,8 +62,8 @@
     import {
         getAllHistoryPurchasePeopleConstitute,
         getHistoryPurchasePeopleConstituteByMerchant,
-        downloadAllHistoryPurchasePeopleConstituteCsvByMerchant,
-        downloadOneHistoryPurchasePeopleConstituteCsvById
+        downloadAllHistoryPurchasePeopleConstituteExcelByMerchant,
+        downloadOneHistoryPurchasePeopleConstituteExcelById
     } from "../../../api/HistoryPurchasePeopleConstitute";
 
 
@@ -88,19 +98,19 @@
                         }
                     })
             },
-            downloadOneHistoryPurchasePeopleConstituteCsvById(index, row) {
+            downloadOneHistoryPurchasePeopleConstituteExcelById(index, row) {
                 console.log(index);
                 console.log(row);
-                downloadOneHistoryPurchasePeopleConstituteCsvById(row.id)
+                downloadOneHistoryPurchasePeopleConstituteExcelById(row.id)
                     .then(data => {
                         console.log(data);
                         this.downloadFile(data.data);
                     })
             },
-            downloadAllHistoryPurchasePeopleConstituteCsvByMerchant(index, row) {
+            downloadAllHistoryPurchasePeopleConstituteExcelByMerchant(index, row) {
                 console.log(index);
                 console.log(row);
-                downloadAllHistoryPurchasePeopleConstituteCsvByMerchant(this.selectMerchant)
+                downloadAllHistoryPurchasePeopleConstituteExcelByMerchant(this.selectMerchant)
                     .then(data => {
                         console.log(data);
                         this.downloadFile(data.data);
