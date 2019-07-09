@@ -25,27 +25,38 @@ BaseForm.vue<template>
                 </el-form>
             </div>
         </div>
-        <div class="container" align="center" v-if="scoreState == true">
-            <el-tag type="success" v-if="score >= 90">恭喜您通过了考试，您的得分为：{{score}}，太棒了。
+        <div class="container" border align="center" v-if="scoreState == true">
+            <el-tag type="success" v-if="score >= 90">恭喜您通过了考试，您的得分为：{{score}}，太棒了！
             </el-tag>
             <el-tag type="danger" v-if="score < 90">很遗憾您没有通过考试，您的得分为：{{score}}
             </el-tag>
         </div>
 
         <el-table :data="dataList" border  ref="multipleTable"  v-if="tableQuestion.visible == true">
-            <el-table-column prop="question" label="题目" width="200" align="center">
+            <el-table-column type="expand" >
+                <template slot-scope="props" >
+                    <el-form label-position="left" inline class="demo-table-expand" v-if="dataList[props.$index].questionType !=='判断'">
+                        <el-form-item label="选项A" v-if="dataList[props.$index].a">
+                            <span>{{ props.row.a }}</span>
+                        </el-form-item>
+                        <el-form-item label="选项B" v-if="dataList[props.$index].b">
+                            <span>{{ props.row.b }}</span>
+                        </el-form-item>
+                        <el-form-item label="选项C" v-if="dataList[props.$index].c">
+                            <span>{{ props.row.c }}</span>
+                        </el-form-item>
+                        <el-form-item label="选项D" v-if="dataList[props.$index].d">
+                            <span>{{ props.row.d }}</span>
+                        </el-form-item>
+                        <el-form-item label="选项E" v-if="dataList[props.$index].e">
+                            <span>{{ props.row.e }}</span>
+                        </el-form-item>
+                    </el-form>
+                </template>
             </el-table-column>
-            <el-table-column prop="a" label="选项a" align="center">
+            <el-table-column prop="question" label="题目" align="center">
             </el-table-column>
-            <el-table-column prop="b" label="选项b" align="center">
-            </el-table-column>
-            <el-table-column prop="c" label="选项c" align="center">
-            </el-table-column>
-            <el-table-column prop="d" label="选项d" align="center">
-            </el-table-column>
-            <el-table-column prop="e" label="选项e" align="center">
-            </el-table-column>
-            <el-table-column label="答案"  align="center">
+            <el-table-column label="答案"  align="center" width="150">
                     <template slot-scope="scope">
                         <el-select v-model="answerList[scope.$index]" @change="handleAnswerList" v-if="answerState == false && dataList[scope.$index].questionType!== '多选'">
                             <el-option key="1" label="a" value="a" v-if="dataList[scope.$index].questionType == '单选'"></el-option>
@@ -76,14 +87,14 @@ BaseForm.vue<template>
                         </el-select>
                     </template>
             </el-table-column>
-            <el-table-column label="正确or错误" align="center" sortable v-if="answerState == true">
+            <el-table-column label="正确or错误" align="center" sortable v-if="answerState == true" width="200">
                 <template slot-scope="scope" >
                 <i class="el-icon-close" v-if="answerList[scope.$index] !== dataList[scope.$index].rightAnswer">错误</i>
                     <i class="el-icon-check" v-if="answerList[scope.$index] == dataList[scope.$index].rightAnswer">正确</i>
                 </template>
             </el-table-column>
-            <el-table-column prop="rightAnswer" align="center" label="正确答案" width="70" v-if="rightAnswerVisible == true">
-            </el-table-column>
+            <!--<el-table-column prop="rightAnswer" align="center" label="正确答案" width="70" v-if="rightAnswerVisible == true">-->
+            <!--</el-table-column>-->
         </el-table>
         <div class="container" align="center" v-if="submitAnswerVisible == true">
             <el-button type="primary" @click="submitAnswer">提交答案</el-button>
@@ -206,3 +217,18 @@ BaseForm.vue<template>
         }
     }
 </script>
+
+<style>
+    .demo-table-expand {
+        font-size: 0;
+    }
+    .demo-table-expand label {
+        width: 90px;
+        color: #99a9bf;
+    }
+    .demo-table-expand .el-form-item {
+        margin-right: 0;
+        margin-bottom: 0;
+        width: 50%;
+    }
+</style>

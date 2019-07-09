@@ -1,10 +1,10 @@
 <template>
     <div class="table">
         <div class="crumbs">
-            <el-breadcrumb separator="/">
-                <el-breadcrumb-item><i class="el-icon-lx-cascades"></i>数据融合</el-breadcrumb-item>
-            </el-breadcrumb>
-        </div>
+        <el-breadcrumb separator="/">
+            <el-breadcrumb-item><i class="el-icon-lx-cascades"></i>历史P人群构成</el-breadcrumb-item>
+        </el-breadcrumb>
+    </div>
         <div class="container">
             <div class="handle-box">
                 <el-select v-model="selectMerchant" placeholder="选择商家" @change="downloadAll=false"
@@ -25,23 +25,27 @@
                     下载全部
                 </el-button>
             </div>
-            <el-table :data="dataList" border class="table" ref="multipleTable"
-                      @selection-change="handleSelectionChange">
-                <el-table-column prop="title" label="标题" width="200">
+            <el-table :data="dataList" b历史AI购买人数order class="table" ref="multipleTable"
+                      border order @selection-change="handleSelectionChange">
+                <el-table-column prop="title" label="标题" width="150" align="center">
                 </el-table-column>
-                <el-table-column prop="merchant" label="商家">
+                <el-table-column prop="merchant" label="商家" align="center">
                 </el-table-column>
-                <el-table-column prop="date" label="日期" width="200"sortable>
+                <el-table-column prop="date" label="日期" width="200" align="center" sortable>
                 </el-table-column>
-                <el-table-column prop="data.当月购买人数" label="当月购买人数" sortable>
+                <el-table-column prop="data.历史PL总人数" label="历史PL总人数" sortable align="center">
                 </el-table-column>
-                <el-table-column prop="data.历史PL总人数" label="历史PL总人数" sortable>
+                <el-table-column prop="data.历史AI人数" label="历史AI人数" sortable align="center">
                 </el-table-column>
-                <el-table-column prop="data.历史PL再购买人数" label="历史PL再购买人数" sortable>
+                <el-table-column prop="data.新增AI人数" label="新增AI人数" sortable align="center">
                 </el-table-column>
-                <el-table-column prop="data.新增AI人数" label="新增AI人数" sortable>
+                <el-table-column prop="data.品牌-当月购买人数" label="品牌-当月购买人数" sortable align="center">
                 </el-table-column>
-                <el-table-column label="操作" width="180" align="center">
+                <el-table-column prop="data.品牌-历史PL再购买人数" label="品牌-历史PL再购买人数" sortable align="center">
+                </el-table-column>
+                <el-table-column prop="data.品牌-历史AI购买人数" label="品牌-历史AI购买人数" sortable align="center">
+                </el-table-column>
+                <el-table-column label="操作" width="80" align="center">
                     <template slot-scope="scope">
                         <el-button type="text" icon="el-icon-down"
                                    @click="downloadOneHistoryPurchasePeopleConstituteExcelById(scope.$index, scope.row)">
