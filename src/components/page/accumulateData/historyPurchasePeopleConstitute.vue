@@ -29,9 +29,9 @@
                       border order @selection-change="handleSelectionChange">
                 <el-table-column prop="title" label="标题" width="150" align="center">
                 </el-table-column>
-                <el-table-column prop="merchant" label="商家" align="center">
+                <el-table-column prop="merchant" label="商家" width="100"align="center">
                 </el-table-column>
-                <el-table-column prop="date" label="日期" width="200" align="center" sortable>
+                <el-table-column prop="date" label="日期" width="160" align="center" sortable>
                 </el-table-column>
                 <el-table-column prop="data.历史PL总人数" label="历史PL总人数" sortable align="center">
                 </el-table-column>
@@ -39,11 +39,11 @@
                 </el-table-column>
                 <el-table-column prop="data.新增AI人数" label="新增AI人数" sortable align="center">
                 </el-table-column>
-                <el-table-column prop="data.品牌-当月购买人数" label="品牌-当月购买人数" sortable align="center">
+                <el-table-column prop="data.品牌-当月购买人数" label="当月购买人数" sortable align="center">
                 </el-table-column>
-                <el-table-column prop="data.品牌-历史PL再购买人数" label="品牌-历史PL再购买人数" sortable align="center">
+                <el-table-column prop="data.品牌-历史PL再购买人数" label="历史PL再购买人数" sortable align="center">
                 </el-table-column>
-                <el-table-column prop="data.品牌-历史AI购买人数" label="品牌-历史AI购买人数" sortable align="center">
+                <el-table-column prop="data.品牌-历史AI购买人数" label="历史AI购买人数" sortable align="center">
                 </el-table-column>
                 <el-table-column label="操作" width="80" align="center">
                     <template slot-scope="scope">

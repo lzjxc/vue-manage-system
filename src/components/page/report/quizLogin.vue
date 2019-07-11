@@ -3,22 +3,25 @@ BaseForm.vue<template>
         <div class="crumbs">
             <el-breadcrumb separator="/">
                 <el-breadcrumb-item><i class="el-icon-lx-calendar"></i> 表单</el-breadcrumb-item>
-                <el-breadcrumb-item>基本表单</el-breadcrumb-item>
+                <el-breadcrumb-item>小测验</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
+        <!--<el-image :src="this.src"></el-image>-->
         <div class="container" v-if="loginState == true">
             <div class="form-box">
-                <el-form ref="loginFormValidation" :rules="loginFormRules" :model="form" label-width="80px" v-if="form.visible==true">
+                <el-form ref="loginFormValidation" :rules="loginFormRules" :model="loginForm" label-width="80px" v-if="loginForm.visible==true">
                     <el-form-item label="测验项目" prop="">
-                        <el-select v-model="form.merchant" placeholder="请选择">
+                        <el-select v-model="loginForm.subCategory" placeholder="请选择">
                             <el-option label="数据银行" value="数据银行"></el-option>
+                            <!--<el-option label="数据参谋" value="数据参谋"></el-option>-->
+                            <el-option label="直通车" value="直通车"></el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item label="姓名" prop="name">
-                        <el-input  size="small" v-model="form.name"></el-input>
+                        <el-input  size="small" v-model="loginForm.name"></el-input>
                     </el-form-item>
 
-                    <el-form-item v-if="this.form.name">
+                    <el-form-item v-if="this.loginForm.name">
                         <el-button type="primary" @click="onSubmit">开始测试</el-button>
                         <el-button>取消</el-button>
                     </el-form-item>
@@ -36,21 +39,27 @@ BaseForm.vue<template>
             <el-table-column type="expand" >
                 <template slot-scope="props" >
                     <el-form label-position="left" inline class="demo-table-expand" v-if="dataList[props.$index].questionType !=='判断'">
-                        <el-form-item label="选项A" v-if="dataList[props.$index].a">
+                        <el-form-item label="image:">
+                            <el-image :src="dataList[props.$index].image"></el-image>
+                        </el-form-item>
+                        <el-form-item label="选项a:" v-if="dataList[props.$index].a">
                             <span>{{ props.row.a }}</span>
                         </el-form-item>
-                        <el-form-item label="选项B" v-if="dataList[props.$index].b">
+                        <el-form-item label="选项b:" v-if="dataList[props.$index].b">
                             <span>{{ props.row.b }}</span>
                         </el-form-item>
-                        <el-form-item label="选项C" v-if="dataList[props.$index].c">
+                        <el-form-item label="选项c:" v-if="dataList[props.$index].c">
                             <span>{{ props.row.c }}</span>
                         </el-form-item>
-                        <el-form-item label="选项D" v-if="dataList[props.$index].d">
+                        <el-form-item label="选项d:" v-if="dataList[props.$index].d">
                             <span>{{ props.row.d }}</span>
                         </el-form-item>
-                        <el-form-item label="选项E" v-if="dataList[props.$index].e">
+                        <el-form-item label="选项e:" v-if="dataList[props.$index].e">
                             <span>{{ props.row.e }}</span>
                         </el-form-item>
+                        <!--<el-form-item label="image:" v-if="dataList[props.$index].image">-->
+                            <!--<el-image :src='this.src' width="40" height="40">1</el-image>-->
+                        <!--</el-form-item>-->
                     </el-form>
                 </template>
             </el-table-column>
@@ -66,7 +75,6 @@ BaseForm.vue<template>
                             <el-option key="3" label="c" value="c" v-if="dataList[scope.$index].c"></el-option>
                             <el-option key="4" label="d" value="d" v-if="dataList[scope.$index].d"></el-option>
                             <el-option key="5" label="e" value="e" v-if="dataList[scope.$index].e"></el-option>
-
                         </el-select>
                         <el-select v-model="answerList[scope.$index]" @change="handleAnswerList" disabled v-if="answerState == true && dataList[scope.$index].questionType!== '多选'">
                             <el-option key="1" label="a" value="a"></el-option>
@@ -104,12 +112,13 @@ BaseForm.vue<template>
 
 <script>
     import ElSelectDropdown from "element-ui/packages/select/src/select-dropdown";
-    import {getAllKnowledgeTest} from "../../../api/KnowlodgeTest";
+    import {getKnowledgeTestListBySubCategory} from "../../../api/KnowlodgeTest";
     export default {
         name: 'baseform',
         components: {ElSelectDropdown},
         data: function(){
             return {
+                // src:'url(../../assets/img/login-bg.jpg)',
                 scoreState:false,
                 score:0,
                 submitAnswerVisible:false,
@@ -132,31 +141,31 @@ BaseForm.vue<template>
                         trigger:'blur'
                     }]
                 },
-                form: {
+                loginForm: {
                     visible:true,
+                    subCategory:"",
                     name: '',
-                    region: '',
-                    date1: '',
-                    date2: '',
-                    merchant: '',
-                    delivery: true,
-                    type: ['步步高'],
-                    resource: '小天才',
-                    desc: '',
-                    json:"",
-                    options: []
                 }
             }
         },
         methods: {
-            getKnowledgeTestList(){
-                console.log("getKnowledge");
-                getAllKnowledgeTest()
+            // getKnowledgeTestList(){
+            //     console.log("getKnowledge");
+            //     getAllKnowledgeTest()
+            //         .then(data => {
+            //             console.log(data);
+            //             this.dataList = data.data;
+            //         })
+            //
+            // },
+            getKnowledgeTestListBySubCategory(){
+                console.log(this.loginForm.subCategory);
+                getKnowledgeTestListBySubCategory(this.loginForm.subCategory)
                     .then(data => {
                         console.log(data);
                         this.dataList = data.data;
-                    })
 
+                    })
             },
             submitAnswer(){
                 for (let i = 40; i < this.answerList.length; i++){
@@ -167,21 +176,42 @@ BaseForm.vue<template>
                     this.answerList[i] = valMutli;
                 }
                 let score = 0;
-
-                for(let k = 0; k < 60; k++){
-                    console.log(this.score);
-                    if (k < 40){
-                        if (this.answerList[k] == this.dataList[k].rightAnswer){
-                            score +=1
-                            console.log("score1");
-                            console.log(this.dataList[k]);
+                if(this.loginForm.subCategory == "直通车"){
+                    for(let l = 0; l < 43; l++){
+                        console.log(this.score);
+                        if (l < 25){
+                            if (this.answerList[l] == this.dataList[l].rightAnswer){
+                                score +=2;
+                                console.log("score2");
+                                console.log(this.dataList[l]);
+                            }
+                        }
+                        if (l > 24){
+                            if(this.answerList[l] == this.dataList[l].rightAnswer){
+                                score +=3;
+                                console.log("score3");
+                                console.log(this.dataList[l]);
+                            }
                         }
                     }
-                    if (k > 39){
-                        if(this.answerList[k] == this.dataList[k].rightAnswer){
-                            score +=3
-                            console.log("score3");
-                            console.log(this.dataList[k]);
+
+                }
+                if(this.loginForm.subCategory == "数据银行"){
+                    for(let k = 0; k < 60; k++){
+                        console.log(this.score);
+                        if (k < 40){
+                            if (this.answerList[k] == this.dataList[k].rightAnswer){
+                                score +=1;
+                                console.log("score1");
+                                console.log(this.dataList[k]);
+                            }
+                        }
+                        if (k > 39){
+                            if(this.answerList[k] == this.dataList[k].rightAnswer){
+                                score +=3;
+                                console.log("score3");
+                                console.log(this.dataList[k]);
+                            }
                         }
                     }
                 }
@@ -193,6 +223,7 @@ BaseForm.vue<template>
               this.submitAnswerVisible = false;
               this.answerState = true;
               this.scoreState =true;
+              this.loginForm.subCategory = "";
             },
             handleAnswerList(index, row){
 
@@ -208,11 +239,11 @@ BaseForm.vue<template>
             onSubmit() {
                 this.score = 0;
                 this.submitAnswerVisible = true;
-                this.form.visible = false;
+                this.loginForm.visible = false;
                 this.tableQuestion.visible = true;
                 this.loginState = false;
                 console.log(this.score);
-                this.getKnowledgeTestList();
+                this.getKnowledgeTestListBySubCategory();
             },
         }
     }
@@ -229,6 +260,6 @@ BaseForm.vue<template>
     .demo-table-expand .el-form-item {
         margin-right: 0;
         margin-bottom: 0;
-        width: 50%;
+        width: 100%;
     }
 </style>
