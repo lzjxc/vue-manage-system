@@ -39,9 +39,6 @@ BaseForm.vue<template>
             <el-table-column type="expand" >
                 <template slot-scope="props" >
                     <el-form label-position="left" inline class="demo-table-expand" v-if="dataList[props.$index].questionType !=='判断'">
-                        <el-form-item label="image:">
-                            <el-image :src="dataList[props.$index].image"></el-image>
-                        </el-form-item>
                         <el-form-item label="选项a:" v-if="dataList[props.$index].a">
                             <span>{{ props.row.a }}</span>
                         </el-form-item>
@@ -168,15 +165,16 @@ BaseForm.vue<template>
                     })
             },
             submitAnswer(){
-                for (let i = 40; i < this.answerList.length; i++){
-                    let valMutli = "";
-                    for (let j = 0; j < this.answerList[i].length; j++){
-                        valMutli += this.answerList[i][j]
-                    }
-                    this.answerList[i] = valMutli;
-                }
                 let score = 0;
                 if(this.loginForm.subCategory == "直通车"){
+                    for (let i = 24; i < this.answerList.length; i++){
+                        let valMutli = "";
+                        this.answerList[i].sort();
+                        for (let j = 0; j < this.answerList[i].length; j++){
+                            valMutli += this.answerList[i][j]
+                        }
+                        this.answerList[i] = valMutli;
+                    }
                     for(let l = 0; l < 43; l++){
                         console.log(this.score);
                         if (l < 25){
@@ -197,6 +195,14 @@ BaseForm.vue<template>
 
                 }
                 if(this.loginForm.subCategory == "数据银行"){
+                    for (let i = 40; i < this.answerList.length; i++){
+                        let valMutli = "";
+                        this.answerList[i].sort();
+                        for (let j = 0; j < this.answerList[i].length; j++){
+                            valMutli += this.answerList[i][j]
+                        }
+                        this.answerList[i] = valMutli;
+                    }
                     for(let k = 0; k < 60; k++){
                         console.log(this.score);
                         if (k < 40){
