@@ -7,7 +7,7 @@ export default new Router({
     routes: [
         {
             path: '/',
-            redirect: '/table'
+            redirect: '/quizLogin'
         },
         {
             path: '/',

@@ -36,7 +36,7 @@ BaseForm.vue<template>
             </el-tag>
         </div>
 
-        <el-table :data="dataList" border  ref="multipleTable"  v-if="tableQuestion.visible == true">
+        <el-table :data="dataList" border  ref="multipleTable"  v-if="tableQuestion.visible == true" @row-click="toogleExpand">
             <el-table-column type="expand" >
                 <template slot-scope="props" >
                     <el-form label-position="left" inline class="demo-table-expand" v-if="dataList[props.$index].questionType !=='判断'">
@@ -64,7 +64,7 @@ BaseForm.vue<template>
             <el-table-column prop="question" label="题目" align="left">
             </el-table-column>
             <el-table-column label="答案"  align="center" width="150">
-                    <template slot-scope="scope">
+                    <template slot-scope="scope" >
                         <el-select v-model="answerList[scope.$index]" @change="handleAnswerList" v-if="answerState == false && dataList[scope.$index].questionType!== '多选'">
                             <el-option key="1" label="a" value="a" v-if="dataList[scope.$index].questionType == '单选'"></el-option>
                             <el-option key="1" label="正确" value="正确" v-if="dataList[scope.$index].questionType == '判断'"></el-option>
@@ -160,7 +160,7 @@ BaseForm.vue<template>
                         console.log(data);
                         this.dataList = data.data;
 
-                    })
+                    });
             },
             submitAnswer(){
                 let score = 0;
@@ -293,12 +293,21 @@ BaseForm.vue<template>
               this.loginForm.subCategory = "";
             },
             handleAnswerList(index, row){
-
                 console.log(index);
                 console.log(row);
                 console.log(this.answerList)
             },
-
+            toogleExpand(row) {
+               let $table = this.$refs.multipleTable;
+               $table.toggleRowExpansion(row);
+                console.log(row);
+            },
+            toggleAllExpand(){
+                let $tableExpend = this.$refs.multipleTable;
+                for (let i=0; i<this.dataList.length; i++){
+                    $tableExpend.toggleRowExpansion(i)
+                }
+            },
             onSubmit() {
                 this.score = 0;
                 this.submitAnswerVisible = true;
