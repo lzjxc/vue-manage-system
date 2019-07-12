@@ -13,8 +13,9 @@ BaseForm.vue<template>
                     <el-form-item label="测验项目" prop="">
                         <el-select v-model="loginForm.subCategory" placeholder="请选择">
                             <el-option label="数据银行" value="数据银行"></el-option>
-                            <!--<el-option label="数据参谋" value="数据参谋"></el-option>-->
+                            <el-option label="生意参谋" value="生意参谋"></el-option>
                             <el-option label="直通车" value="直通车"></el-option>
+                            <el-option label="钻展推广" value="钻展推广"></el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item label="姓名" prop="name">
@@ -60,7 +61,7 @@ BaseForm.vue<template>
                     </el-form>
                 </template>
             </el-table-column>
-            <el-table-column prop="question" label="题目" align="center">
+            <el-table-column prop="question" label="题目" align="left">
             </el-table-column>
             <el-table-column label="答案"  align="center" width="150">
                     <template slot-scope="scope">
@@ -119,14 +120,11 @@ BaseForm.vue<template>
                 scoreState:false,
                 score:0,
                 submitAnswerVisible:false,
-                checkList:[],
                 answerList:[],
                 selectMerchant:[],
                 dataList:[],
                 loginState:true,
                 tableQuestion:{
-                  resource:[],
-                  type:[],
                   visible:false,
                 },
                 rightAnswerVisible:false,
@@ -166,38 +164,12 @@ BaseForm.vue<template>
             },
             submitAnswer(){
                 let score = 0;
-                if(this.loginForm.subCategory == "直通车"){
-                    for (let i = 24; i < this.answerList.length; i++){
-                        let valMutli = "";
-                        this.answerList[i].sort();
-                        for (let j = 0; j < this.answerList[i].length; j++){
-                            valMutli += this.answerList[i][j]
-                        }
-                        this.answerList[i] = valMutli;
-                    }
-                    for(let l = 0; l < 43; l++){
-                        console.log(this.score);
-                        if (l < 25){
-                            if (this.answerList[l] == this.dataList[l].rightAnswer){
-                                score +=2;
-                                console.log("score2");
-                                console.log(this.dataList[l]);
-                            }
-                        }
-                        if (l > 24){
-                            if(this.answerList[l] == this.dataList[l].rightAnswer){
-                                score +=3;
-                                console.log("score3");
-                                console.log(this.dataList[l]);
-                            }
-                        }
-                    }
-
-                }
                 if(this.loginForm.subCategory == "数据银行"){
                     for (let i = 40; i < this.answerList.length; i++){
                         let valMutli = "";
-                        this.answerList[i].sort();
+                        if(this.answerList.length > 1) {
+                            this.answerList[i].sort();
+                        }
                         for (let j = 0; j < this.answerList[i].length; j++){
                             valMutli += this.answerList[i][j]
                         }
@@ -221,6 +193,95 @@ BaseForm.vue<template>
                         }
                     }
                 }
+                else if(this.loginForm.subCategory == "生意参谋"){
+                    for (let i = 20; i < this.answerList.length; i++){
+                        let valMutli = "";
+                        if(this.answerList.length > 1) {
+                            this.answerList[i].sort();
+                        }
+                        for (let j = 0; j < this.answerList[i].length; j++){
+                            valMutli += this.answerList[i][j]
+                        }
+                        this.answerList[i] = valMutli;
+                    }
+                    for(let l = 0; l < 28; l++){
+                        console.log(this.score);
+                        console.log(this.dataList[l].rightAnswer);
+                        if (l < 20){
+                            if (this.answerList[l] == this.dataList[l].rightAnswer){
+                                score +=3;
+                                console.log("score3");
+                            }
+                        }
+                        if (l > 19){
+                            if(this.answerList[l] == this.dataList[l].rightAnswer){
+                                score +=5;
+                                console.log("score5");
+                            }
+                        }
+                    }
+
+                }
+                else if(this.loginForm.subCategory == "直通车"){
+                    for (let i = 23; i < this.answerList.length; i++){
+                        let valMutli = "";
+                        if(this.answerList.length > 1) {
+                            this.answerList[i].sort();
+                        }
+                        for (let j = 0; j < this.answerList[i].length; j++){
+                            valMutli += this.answerList[i][j]
+                        }
+                        this.answerList[i] = valMutli;
+                    }
+                    for(let l = 0; l < 41; l++){
+                        console.log(this.score);
+                        if (l < 23){
+                            if (this.answerList[l] == this.dataList[l].rightAnswer){
+                                score +=2;
+                                console.log("score4");
+                                console.log(this.dataList[l]);
+                            }
+                        }
+                        if (l > 22){
+                            if(this.answerList[l] == this.dataList[l].rightAnswer){
+                                score +=3;
+                                console.log("score6");
+                                console.log(this.dataList[l]);
+                            }
+                        }
+                    }
+
+                }
+                else if(this.loginForm.subCategory == "钻展推广"){
+                    for (let i = 10; i < this.answerList.length; i++){
+                        let valMutli = "";
+                        if(this.answerList.length > 1) {
+                            this.answerList[i].sort();
+                        }
+                        for (let j = 0; j < this.answerList[i].length; j++){
+                            valMutli += this.answerList[i][j]
+                        }
+                        this.answerList[i] = valMutli;
+                    }
+                    for(let l = 0; l < 19; l++){
+                        console.log(this.score);
+                        if (l < 10){
+                            if (this.answerList[l] == this.dataList[l].rightAnswer){
+                                score +=4;
+                                console.log("score2");
+                                console.log(this.dataList[l]);
+                            }
+                        }
+                        if (l > 9){
+                            if(this.answerList[l] == this.dataList[l].rightAnswer){
+                                score +=6;
+                                console.log("score3");
+                                console.log(this.dataList[l]);
+                            }
+                        }
+                    }
+
+                }
                 console.log("now score is ");
                 console.log(this.score);
                 this.score = score;
@@ -237,17 +298,14 @@ BaseForm.vue<template>
                 console.log(row);
                 console.log(this.answerList)
             },
-            handleCheckList(index, row){
-                console.log(index);
-                console.log(row);
-                console.log(this.checkList)
-            },
+
             onSubmit() {
                 this.score = 0;
                 this.submitAnswerVisible = true;
                 this.loginForm.visible = false;
                 this.tableQuestion.visible = true;
                 this.loginState = false;
+                this.answerList = [];
                 console.log(this.score);
                 this.getKnowledgeTestListBySubCategory();
             },
