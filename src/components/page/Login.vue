@@ -1,7 +1,7 @@
 <template>
     <div class="login-wrap">
         <div class="ms-login">
-            <div class="ms-title">龙韵数据业务管理系统</div>
+            <div class="ms-title">书童-大数据分析与洞察系统</div>
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="0px" class="ms-content">
                 <el-form-item prop="username">
                     <el-input v-model="ruleForm.username" placeholder="username">
@@ -16,7 +16,6 @@
                 <div class="login-btn">
                     <el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
                 </div>
-                <p class="login-tips">Tips : 用户名和密码随便填。</p>
             </el-form>
         </div>
     </div>
@@ -28,7 +27,7 @@
             return {
                 ruleForm: {
                     username: 'admin',
-                    password: '123123'
+                    password: 'shutong'
                 },
                 rules: {
                     username: [
@@ -61,7 +60,7 @@
         position: relative;
         width:100%;
         height:100%;
-        background-image: url(../../assets/img/login-bg.jpg);
+        background-image: url(../../assets/img/background.jpg);
         background-size: 100%;
     }
     .ms-title{
