@@ -16,6 +16,7 @@ BaseForm.vue<template>
                             <el-option label="生意参谋" value="生意参谋"></el-option>
                             <el-option label="直通车" value="直通车"></el-option>
                             <el-option label="钻展推广" value="钻展推广"></el-option>
+                            <el-option label="内容运营" value="内容运营"></el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item label="姓名" prop="name">
@@ -276,6 +277,36 @@ BaseForm.vue<template>
                             if(this.answerList[l] == this.dataList[l].rightAnswer){
                                 score +=6;
                                 console.log("score3");
+                                console.log(this.dataList[l]);
+                            }
+                        }
+                    }
+
+                }
+                else if(this.loginForm.subCategory == "内容运营"){
+                    for (let i = 35; i < this.answerList.length; i++){
+                        let valMutli = "";
+                        if(this.answerList.length > 1) {
+                            this.answerList[i].sort();
+                        }
+                        for (let j = 0; j < this.answerList[i].length; j++){
+                            valMutli += this.answerList[i][j]
+                        }
+                        this.answerList[i] = valMutli;
+                    }
+                    for(let l = 0; l < 45; l++){
+                        console.log(this.score);
+                        if (l < 35){
+                            if (this.answerList[l] == this.dataList[l].rightAnswer){
+                                score +=2;
+                                console.log("内容运营score2");
+                                console.log(this.dataList[l]);
+                            }
+                        }
+                        if (l > 34){
+                            if(this.answerList[l] == this.dataList[l].rightAnswer){
+                                score +=3;
+                                console.log("内容运营score3");
                                 console.log(this.dataList[l]);
                             }
                         }
