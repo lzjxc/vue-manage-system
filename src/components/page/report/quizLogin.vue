@@ -1,10 +1,17 @@
 BaseForm.vue<template>
     <div>
         <div class="crumbs">
+            <el-row>
+                <el-col :span="12">
             <el-breadcrumb separator="/">
                 <el-breadcrumb-item><i class="el-icon-lx-calendar"></i> 表单</el-breadcrumb-item>
                 <el-breadcrumb-item>小测验</el-breadcrumb-item>
             </el-breadcrumb>
+                </el-col>
+                <el-col :span="12">
+                    <el-tag v-if="lastTimerVisible==true">剩余时间：{{lastTimer}}s</el-tag>
+                </el-col>
+            </el-row>
         </div>
         <!--<el-image :src="this.src"></el-image>-->
         <div class="container" v-if="loginState == true">
@@ -31,9 +38,9 @@ BaseForm.vue<template>
             </div>
         </div>
         <div class="container" border align="center" v-if="scoreState == true">
-            <el-tag type="success" v-if="score >= 90">恭喜您通过了考试，您的得分为：{{score}}，太棒了！
+            <el-tag type="success" v-if="score >= 90">{{loginForm.name}}同学，恭喜你通过了考试，您的得分为：{{score}}，太棒了！
             </el-tag>
-            <el-tag type="danger" v-if="score < 90">很遗憾您没有通过考试，您的得分为：{{score}}
+            <el-tag type="danger" v-if="score < 90">{{loginForm.name}}同学，很遗憾你没有通过考试，您的得分为：{{score}}，good luck^^！
             </el-tag>
         </div>
 
@@ -118,6 +125,9 @@ BaseForm.vue<template>
         data: function(){
             return {
                 // src:'url(../../assets/img/login-bg.jpg)',
+                lastTimer:9999,
+                lastTimerVisible:false,
+                lastTimeCleaner:false,
                 scoreState:false,
                 score:0,
                 submitAnswerVisible:false,
@@ -319,6 +329,8 @@ BaseForm.vue<template>
                 console.log(this.score);
               this.rightAnswerVisible = true;
               this.submitAnswerVisible = false;
+              this.lastTimerVisible = false;
+              this.lastTimeCleaner = true;
               this.answerState = true;
               this.scoreState =true;
               this.loginForm.subCategory = "";
@@ -339,13 +351,40 @@ BaseForm.vue<template>
                     $tableExpend.toggleRowExpansion(i)
                 }
             },
+            lastTimerAlert(){
+                this.$message({
+                        showClose: false,
+                        message:"剩余时间只有5分钟了，请抓紧时间提交答案。注意：时间结束将会自动提交答案。",
+                        type:"error",
+                        duration:3000
+                    })
+            },
+            countDown(){
+                if (this.loginForm.subCategory == "数据银行"){
+                    this.lastTimer = 5400;
+                }
+                else{
+                    this.lastTimer = 3600;
+                }
+              window.setInterval(() => {
+                  this.lastTimer--;
+                  if (this.lastTimer == 300){
+                      this.lastTimerAlert()
+                  }
+                  else if(this.lastTimer == 0){
+                      this.submitAnswer();
+                  }
+              },1000)
+            },
             onSubmit() {
                 this.score = 0;
                 this.submitAnswerVisible = true;
                 this.loginForm.visible = false;
                 this.tableQuestion.visible = true;
                 this.loginState = false;
+                this.lastTimerVisible = true;
                 this.answerList = [];
+                this.countDown();
                 console.log(this.score);
                 this.getKnowledgeTestListBySubCategory();
             },
