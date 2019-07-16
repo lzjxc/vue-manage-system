@@ -38,9 +38,9 @@ BaseForm.vue<template>
             </div>
         </div>
         <div class="container" border align="center" v-if="scoreState == true">
-            <el-tag type="success" v-if="testerScore >= 90">{{loginForm.name}}同学，恭喜你通过了考试，您的得分为：{{testerScore}}分，太棒了！
+            <el-tag type="success" v-if="testerScore >= 80">{{loginForm.name}}同学，恭喜你通过了考试，您的得分为：{{testerScore}}分，太棒了！
             </el-tag>
-            <el-tag type="danger" v-if="testerScore < 90">{{loginForm.name}}同学，很遗憾你没有通过考试，您的得分为：{{testerScore}}分，good luck^^！
+            <el-tag type="danger" v-if="testerScore < 80">{{loginForm.name}}同学，很遗憾你没有通过考试，您的得分为：{{testerScore}}分，good luck^^！
             </el-tag>
         </div>
 
