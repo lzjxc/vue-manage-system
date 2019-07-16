@@ -27,10 +27,10 @@ BaseForm.vue<template>
                         </el-select>
                     </el-form-item>
                     <el-form-item label="姓名" prop="name">
-                        <el-input  size="small" v-model="loginForm.name"></el-input>
+                        <el-input  size="small" v-model="loginForm.testerName"></el-input>
                     </el-form-item>
 
-                    <el-form-item v-if="this.loginForm.name">
+                    <el-form-item v-if="this.loginForm.testerName">
                         <el-button type="primary" @click="onSubmit">开始测试</el-button>
                         <el-button>取消</el-button>
                     </el-form-item>
@@ -38,9 +38,9 @@ BaseForm.vue<template>
             </div>
         </div>
         <div class="container" border align="center" v-if="scoreState == true">
-            <el-tag type="success" v-if="score >= 90">{{loginForm.name}}同学，恭喜你通过了考试，您的得分为：{{score}}，太棒了！
+            <el-tag type="success" v-if="testerScore >= 90">{{loginForm.name}}同学，恭喜你通过了考试，您的得分为：{{testerScore}}分，太棒了！
             </el-tag>
-            <el-tag type="danger" v-if="score < 90">{{loginForm.name}}同学，很遗憾你没有通过考试，您的得分为：{{score}}，good luck^^！
+            <el-tag type="danger" v-if="testerScore < 90">{{loginForm.name}}同学，很遗憾你没有通过考试，您的得分为：{{testerScore}}分，good luck^^！
             </el-tag>
         </div>
 
@@ -119,6 +119,7 @@ BaseForm.vue<template>
 <script>
     import ElSelectDropdown from "element-ui/packages/select/src/select-dropdown";
     import {getKnowledgeTestListBySubCategory} from "../../../api/KnowlodgeTest";
+    import {saveScore} from "../../../api/KnowlodgeTestScore";    
     export default {
         name: 'baseform',
         components: {ElSelectDropdown},
@@ -129,7 +130,7 @@ BaseForm.vue<template>
                 lastTimerVisible:false,
                 lastTimeCleaner:false,
                 scoreState:false,
-                score:0,
+                testerScore:0,
                 submitAnswerVisible:false,
                 answerList:[],
                 selectMerchant:[],
@@ -150,7 +151,7 @@ BaseForm.vue<template>
                 loginForm: {
                     visible:true,
                     subCategory:"",
-                    name: '',
+                    testerName: '',
                 }
             }
         },
@@ -173,8 +174,18 @@ BaseForm.vue<template>
 
                     });
             },
+            saveScore(){
+                console.log("score");
+                let result={
+                      testerName: this.loginForm.testerName,
+                      testerScore: this.testerScore,
+                    subCategory: this.loginForm.subCategory,
+                };
+                console.log(result);
+              saveScore(result)
+            },
             submitAnswer(){
-                let score = 0;
+                let testerScore = 0;
                 if(this.loginForm.subCategory == "数据银行"){
                     for (let i = 40; i < this.answerList.length; i++){
                         let valMutli = "";
@@ -187,17 +198,17 @@ BaseForm.vue<template>
                         this.answerList[i] = valMutli;
                     }
                     for(let k = 0; k < 60; k++){
-                        console.log(this.score);
+                        console.log(this.testerScore);
                         if (k < 40){
                             if (this.answerList[k] == this.dataList[k].rightAnswer){
-                                score +=1;
+                                testerScore +=1;
                                 console.log("score1");
                                 console.log(this.dataList[k]);
                             }
                         }
                         if (k > 39){
                             if(this.answerList[k] == this.dataList[k].rightAnswer){
-                                score +=3;
+                                testerScore +=3;
                                 console.log("score3");
                                 console.log(this.dataList[k]);
                             }
@@ -216,17 +227,17 @@ BaseForm.vue<template>
                         this.answerList[i] = valMutli;
                     }
                     for(let l = 0; l < 28; l++){
-                        console.log(this.score);
+                        console.log(this.testerScore);
                         console.log(this.dataList[l].rightAnswer);
                         if (l < 20){
                             if (this.answerList[l] == this.dataList[l].rightAnswer){
-                                score +=3;
+                                testerScore +=3;
                                 console.log("score3");
                             }
                         }
                         if (l > 19){
                             if(this.answerList[l] == this.dataList[l].rightAnswer){
-                                score +=5;
+                                testerScore +=5;
                                 console.log("score5");
                             }
                         }
@@ -245,17 +256,17 @@ BaseForm.vue<template>
                         this.answerList[i] = valMutli;
                     }
                     for(let l = 0; l < 41; l++){
-                        console.log(this.score);
+                        console.log(this.testerScore);
                         if (l < 23){
                             if (this.answerList[l] == this.dataList[l].rightAnswer){
-                                score +=2;
+                                testerScore +=2;
                                 console.log("score4");
                                 console.log(this.dataList[l]);
                             }
                         }
                         if (l > 22){
                             if(this.answerList[l] == this.dataList[l].rightAnswer){
-                                score +=3;
+                                testerScore +=3;
                                 console.log("score6");
                                 console.log(this.dataList[l]);
                             }
@@ -275,17 +286,17 @@ BaseForm.vue<template>
                         this.answerList[i] = valMutli;
                     }
                     for(let l = 0; l < 19; l++){
-                        console.log(this.score);
+                        console.log(this.testerScore);
                         if (l < 10){
                             if (this.answerList[l] == this.dataList[l].rightAnswer){
-                                score +=4;
+                                testerScore +=4;
                                 console.log("score2");
                                 console.log(this.dataList[l]);
                             }
                         }
                         if (l > 9){
                             if(this.answerList[l] == this.dataList[l].rightAnswer){
-                                score +=6;
+                                testerScore +=6;
                                 console.log("score3");
                                 console.log(this.dataList[l]);
                             }
@@ -305,17 +316,17 @@ BaseForm.vue<template>
                         this.answerList[i] = valMutli;
                     }
                     for(let l = 0; l < 45; l++){
-                        console.log(this.score);
+                        console.log(this.testerScore);
                         if (l < 35){
                             if (this.answerList[l] == this.dataList[l].rightAnswer){
-                                score +=2;
+                                testerScore +=2;
                                 console.log("内容运营score2");
                                 console.log(this.dataList[l]);
                             }
                         }
                         if (l > 34){
                             if(this.answerList[l] == this.dataList[l].rightAnswer){
-                                score +=3;
+                                testerScore +=3;
                                 console.log("内容运营score3");
                                 console.log(this.dataList[l]);
                             }
@@ -323,11 +334,12 @@ BaseForm.vue<template>
                     }
 
                 }
-                console.log("now score is ");
-                console.log(this.score);
-                this.score = score;
-                console.log(this.score);
+                console.log("now testerScore is ");
+                console.log(this.testerScore);
+                this.testerScore = testerScore;
+                console.log(this.testerScore);
               this.rightAnswerVisible = true;
+              this.saveScore(this.loginForm.testerName, this.testerScore);
               this.submitAnswerVisible = false;
               this.lastTimerVisible = false;
               this.lastTimeCleaner = true;
@@ -377,7 +389,7 @@ BaseForm.vue<template>
               },1000)
             },
             onSubmit() {
-                this.score = 0;
+                this.testerScore = 0;
                 this.submitAnswerVisible = true;
                 this.loginForm.visible = false;
                 this.tableQuestion.visible = true;
@@ -385,7 +397,7 @@ BaseForm.vue<template>
                 this.lastTimerVisible = true;
                 this.answerList = [];
                 this.countDown();
-                console.log(this.score);
+                console.log(this.testerScore);
                 this.getKnowledgeTestListBySubCategory();
             },
         }
