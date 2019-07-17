@@ -26,7 +26,7 @@ BaseForm.vue<template>
                             <el-option label="内容运营" value="内容运营"></el-option>
                         </el-select>
                     </el-form-item>
-                    <el-form-item label="姓名" prop="name">
+                    <el-form-item label="姓名">
                         <el-input  size="small" v-model="loginForm.testerName"></el-input>
                     </el-form-item>
 
@@ -38,9 +38,9 @@ BaseForm.vue<template>
             </div>
         </div>
         <div class="container" border align="center" v-if="scoreState == true">
-            <el-tag type="success" v-if="testerScore >= 80">{{loginForm.name}}同学，恭喜你通过了考试，您的得分为：{{testerScore}}分，太棒了！
+            <el-tag type="success" v-if="testerScore >= 80">{{loginForm.testerName}}同学，恭喜你通过了考试，您的得分为：{{testerScore}}分，太棒了！
             </el-tag>
-            <el-tag type="danger" v-if="testerScore < 80">{{loginForm.name}}同学，很遗憾你没有通过考试，您的得分为：{{testerScore}}分，good luck^^！
+            <el-tag type="danger" v-if="testerScore < 80">{{loginForm.testerName}}同学，很遗憾你没有通过考试，您的得分为：{{testerScore}}分，good luck^^！
             </el-tag>
         </div>
 
@@ -142,7 +142,7 @@ BaseForm.vue<template>
                 rightAnswerVisible:false,
                 answerState:false,
                 loginFormRules:{
-                    name:[{
+                    testerName:[{
                         required:true,
                         message:'请输入姓名',
                         trigger:'blur'
@@ -185,8 +185,10 @@ BaseForm.vue<template>
               saveScore(result)
             },
             submitAnswer(){
+                console.log("answerList" + this.answerList);
                 let testerScore = 0;
                 if(this.loginForm.subCategory == "数据银行"){
+                    // 多选答案排序
                     for (let i = 40; i < this.answerList.length; i++){
                         let valMutli = "";
                         if(this.answerList.length > 1) {
@@ -260,14 +262,14 @@ BaseForm.vue<template>
                         if (l < 23){
                             if (this.answerList[l] == this.dataList[l].rightAnswer){
                                 testerScore +=2;
-                                console.log("score4");
+                                console.log("score2");
                                 console.log(this.dataList[l]);
                             }
                         }
                         if (l > 22){
                             if(this.answerList[l] == this.dataList[l].rightAnswer){
                                 testerScore +=3;
-                                console.log("score6");
+                                console.log("score3");
                                 console.log(this.dataList[l]);
                             }
                         }
@@ -285,19 +287,19 @@ BaseForm.vue<template>
                         }
                         this.answerList[i] = valMutli;
                     }
-                    for(let l = 0; l < 19; l++){
+                    for(let l = 0; l < 20; l++){
                         console.log(this.testerScore);
                         if (l < 10){
                             if (this.answerList[l] == this.dataList[l].rightAnswer){
                                 testerScore +=4;
-                                console.log("score2");
+                                console.log("score4");
                                 console.log(this.dataList[l]);
                             }
                         }
                         if (l > 9){
                             if(this.answerList[l] == this.dataList[l].rightAnswer){
                                 testerScore +=6;
-                                console.log("score3");
+                                console.log("score6");
                                 console.log(this.dataList[l]);
                             }
                         }
