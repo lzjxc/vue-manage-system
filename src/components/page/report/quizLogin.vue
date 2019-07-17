@@ -16,8 +16,8 @@ BaseForm.vue<template>
         <!--<el-image :src="this.src"></el-image>-->
         <div class="container" v-if="loginState == true" >
             <div class="form-box">
-                <el-form ref="loginStateRef" :rules="loginFormRules" :model="loginForm" label-width="80px" v-if="loginForm.visible==true">
-                    <el-form-item label="测验项目" prop="">
+                <el-form ref="loginForm" :rules="loginFormRules" :model="loginForm" label-width="80px" v-if="loginForm.visible==true">
+                    <el-form-item label="测验项目">
                         <el-select v-model="loginForm.subCategory" placeholder="请选择">
                             <el-option label="数据银行" value="数据银行"></el-option>
                             <el-option label="生意参谋" value="生意参谋"></el-option>
@@ -414,7 +414,7 @@ BaseForm.vue<template>
               },1000)
             },
             onSubmit() {
-                this.$refs.loginStateRef.validate(valid => {
+                this.$refs.loginForm.validate(valid => {
                     if(valid){
                         this.testerScore = 0;
                         this.submitAnswerVisible = true;
