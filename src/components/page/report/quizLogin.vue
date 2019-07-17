@@ -14,9 +14,9 @@ BaseForm.vue<template>
             </el-row>
         </div>
         <!--<el-image :src="this.src"></el-image>-->
-        <div class="container" v-if="loginState == true">
+        <div class="container" v-if="loginState == true" >
             <div class="form-box">
-                <el-form ref="loginFormValidation" :rules="loginFormRules" :model="loginForm" label-width="80px" v-if="loginForm.visible==true">
+                <el-form ref="loginStateRef" :rules="loginFormRules" :model="loginForm" label-width="80px" v-if="loginForm.visible==true">
                     <el-form-item label="测验项目" prop="">
                         <el-select v-model="loginForm.subCategory" placeholder="请选择">
                             <el-option label="数据银行" value="数据银行"></el-option>
@@ -26,11 +26,11 @@ BaseForm.vue<template>
                             <el-option label="内容运营" value="内容运营"></el-option>
                         </el-select>
                     </el-form-item>
-                    <el-form-item label="姓名">
+                    <el-form-item label="姓名" prop="testerName">
                         <el-input  size="small" v-model="loginForm.testerName"></el-input>
                     </el-form-item>
 
-                    <el-form-item v-if="this.loginForm.testerName">
+                    <el-form-item>
                         <el-button type="primary" @click="onSubmit">开始测试</el-button>
                         <el-button>取消</el-button>
                     </el-form-item>
@@ -123,8 +123,38 @@ BaseForm.vue<template>
     export default {
         name: 'baseform',
         components: {ElSelectDropdown},
+
         data: function(){
+            var checkName  = (rule, value, callback) => {
+                var reg = /^[\u4E00-\u9FA5]+$/;
+                let valTemp = value+"";
+                if (!value) {
+                    callback(new Error("姓名不能为空"));
+                }
+                else if(valTemp.length <2){
+                    callback(new Error("姓名长度在 2 到 5 个字符"));
+                }
+                else if(valTemp.length >5){
+                    callback(new Error("姓名长度在 2 到 5 个字符"));
+                }
+                else{
+                    for (let j = 0; j < valTemp.length;j++){
+                        if(!reg.test(valTemp[j])){
+                            callback(new Error("姓名只能为中文"));
+                        }
+                        else {
+                            callback();
+                        }
+                    }
+                }
+            };
             return {
+                    loginFormRules:{
+                        testerName:[
+                            {required:true, message:'请输入姓名', trigger:'blur'},
+                            { validator: checkName, trigger: "blur" }
+                        ]
+                    },
                 // src:'url(../../assets/img/login-bg.jpg)',
                 lastTimer:9999,
                 lastTimerVisible:false,
@@ -141,13 +171,6 @@ BaseForm.vue<template>
                 },
                 rightAnswerVisible:false,
                 answerState:false,
-                loginFormRules:{
-                    testerName:[{
-                        required:true,
-                        message:'请输入姓名',
-                        trigger:'blur'
-                    }]
-                },
                 loginForm: {
                     visible:true,
                     subCategory:"",
@@ -391,16 +414,22 @@ BaseForm.vue<template>
               },1000)
             },
             onSubmit() {
-                this.testerScore = 0;
-                this.submitAnswerVisible = true;
-                this.loginForm.visible = false;
-                this.tableQuestion.visible = true;
-                this.loginState = false;
-                this.lastTimerVisible = true;
-                this.answerList = [];
-                this.countDown();
-                console.log(this.testerScore);
-                this.getKnowledgeTestListBySubCategory();
+                this.$refs.loginStateRef.validate(valid => {
+                    if(valid){
+                        this.testerScore = 0;
+                        this.submitAnswerVisible = true;
+                        this.loginForm.visible = false;
+                        this.tableQuestion.visible = true;
+                        this.loginState = false;
+                        this.lastTimerVisible = true;
+                        this.answerList = [];
+                        this.countDown();
+                        console.log(this.testerScore);
+                        this.getKnowledgeTestListBySubCategory();
+                    }
+                });
+
+
             },
         }
     }
